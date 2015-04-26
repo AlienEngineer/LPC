@@ -14,13 +14,9 @@
 
 #include <cr_section_macros.h>
 
-// TODO: insert other include files here
-
-// TODO: insert other definitions and declarations here
 
 int main(void) {
 
-    // TODO: insert code here
 
     // Force the counter to be placed into memory
     volatile static int i = 0 ;

@@ -24,7 +24,17 @@ public:
 	 */
 	__INLINE void PinMode(uint32_t pin, uint32_t direction);
 
+	/**
+	 * Reads from the given pin. Returns HIGH or LOW constant.
+	 * @param pin
+	 */
 	uint32_t DigitalRead(uint32_t pin);
+
+	/**
+	 * Set the pin value with the given value. Use HIGH or LOW constants.
+	 * @param pin
+	 * @param value
+	 */
 	__INLINE void DigitalWrite(uint32_t pin, uint32_t value);
 
 private:
