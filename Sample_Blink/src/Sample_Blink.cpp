@@ -13,16 +13,25 @@
 #endif
 
 #include <cr_section_macros.h>
+#include "GPIO.h"
+#include "Timer.h"
 
+#define LED_PIN   22
 
 int main(void) {
-
-
-    // Force the counter to be placed into memory
-    volatile static int i = 0 ;
-    // Enter an infinite loop, just incrementing a counter
+    GPIO gpio0 (GPIO0);
+    Timer timer;
+    
+    gpio0.PinMode(LED_PIN, OUTPUT);
+    timer.Init();
+    
     while(1) {
-        i++ ;
+     
+        gpio0.DigitalWrite(HIGH);
+        timer.DelayMS(500);
+        
+        gpio0.DigitalWrite(LOW);
+        timer.DelayMS(500);
     }
     return 0 ;
 }
