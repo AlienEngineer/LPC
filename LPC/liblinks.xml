@@ -11,22 +11,22 @@
 
 <project name="" update="true">
 	<setting id="all.compiler.inc">
-		<value>${workspace_loc:/Common/inc}</value>
+		<value>${workspace_loc:/LPC/inc}</value>
         </setting>
     <setting id="assembler.inc">
-		<value>${workspace_loc:/Common/inc}</value>
+		<value>${workspace_loc:/LPC/inc}</value>
     </setting>
 	<setting id="linker.libs">
-		<value>Common</value>
+		<value>LPC</value>
 	</setting>
 	<setting id="linker.paths" buildType="Debug">
-		<value>${workspace_loc:/Common/Debug}</value>
+		<value>${workspace_loc:/LPC/Debug}</value>
 	</setting>
 	<setting id="linker.paths" buildType="Release">
-		<value>${workspace_loc:/Common/Release}</value>
+		<value>${workspace_loc:/LPC/Release}</value>
 	</setting>
-	<requires msg="Library project `Common` not found">
-		<value>Common</value>
+	<requires msg="Library project `LPC` not found">
+		<value>LPC</value>
 	</requires>
 </project>
 

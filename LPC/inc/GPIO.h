@@ -1,16 +1,15 @@
 /*
  * GPIO.h
  *
- *  Created on: 26/04/2015
+ *  Created on: 01/05/2015
  *      Author: Alien
  */
 
 #ifndef GPIO_H_
 #define GPIO_H_
 
-#include "LPC17xx.h"
-#include "core_cm3.h"
-#include "Common.h"
+#include <common.h>
+
 
 class GPIO {
 public:
@@ -22,7 +21,7 @@ public:
 	 * @param direction
 	 * @param pin
 	 */
-	__INLINE void PinMode(uint32_t pin, uint32_t direction);
+	void PinMode(uint32_t pin, uint32_t direction);
 
 	/**
 	 * Reads from the given pin. Returns HIGH or LOW constant.
@@ -35,7 +34,7 @@ public:
 	 * @param pin
 	 * @param value
 	 */
-	__INLINE void DigitalWrite(uint32_t pin, uint32_t value);
+	void DigitalWrite(uint32_t pin, uint32_t value);
 
 private:
 	LPC_GPIO_TypeDef * GPIOPx;

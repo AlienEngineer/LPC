@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>GPIO</name>
+	<name>LPC_Tests</name>
 	<comment></comment>
 	<projects>
 		<project>CMSIS_CORE_LPC17xx</project>
-		<project>Common</project>
+		<project>LPC</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
