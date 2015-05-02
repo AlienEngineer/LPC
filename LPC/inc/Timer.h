@@ -8,10 +8,19 @@
 #ifndef TIMER_H_
 #define TIMER_H_
 
+#include <common.h>
+
+#define SYSTICK		0
+
+
 class Timer {
 public:
-	Timer();
+	Timer(uint32_t timer);
 	virtual ~Timer();
+	void DelayMS(uint32_t millis);
+private:
+	uint32_t timer;
 };
 
 #endif /* TIMER_H_ */
+
