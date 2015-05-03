@@ -298,7 +298,7 @@ void LCD::LineBreak() {
 	this->current_position.y += LINE_HEIGHT;
 }
 
-void LCD::Write(char * str) {
+void LCD::Write(char const * str) {
 	while (*str) {
 
 		while (*str && this->current_position.x == START_AT && *str == ' ') {

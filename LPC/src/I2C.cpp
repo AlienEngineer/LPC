@@ -38,39 +38,29 @@ I2C::I2C(LPC_I2C_TypeDef * i2c, uint32_t frequency) {
 I2C::I2C() {
 }
 
+void I2C::InitSdaScl(uint32_t sdaPin, uint32_t sclPin, uint32_t func) {
+	PIN sda(0, sdaPin);
+	PIN scl(0, sclPin);
+	sda.SetFunction(func);
+	scl.SetFunction(func);
+}
 
 void I2C::Init(LPC_I2C_TypeDef * i2c, uint32_t frequency) {
 	this->i2c = i2c;
 	this->freq = frequency;
+
+	if (i2c == LPC_I2C0) {
+		this->InitSdaScl(I2C_SDA0, I2C_SCL0, PINSEL_I2C0);
+	} else if (i2c == LPC_I2C1) {
+		this->InitSdaScl(I2C_SDA1, I2C_SCL1, PINSEL_I2C1);
+	} else if (i2c == LPC_I2C2) {
+		this->InitSdaScl(I2C_SDA2, I2C_SCL2, PINSEL_I2C2);
+	}
 }
 
 void I2C::Init() {
-	PIN sda;
-	PIN scl;
-
-	if (i2c == LPC_I2C0) {
-		sda.Init(0, I2C_SDA0);
-		scl.Init(0, I2C_SCL0);
-
-		sda.SetFunction(PINSEL_I2C0);
-		scl.SetFunction(PINSEL_I2C0);
-	} else if (i2c == LPC_I2C1) {
-		sda.Init(0, I2C_SDA1);
-		scl.Init(0, I2C_SCL1);
-
-		sda.SetFunction(PINSEL_I2C1);
-		scl.SetFunction(PINSEL_I2C1);
-	} else if (i2c == LPC_I2C2) {
-		sda.Init(0, I2C_SDA2);
-		scl.Init(0, I2C_SCL2);
-
-		sda.SetFunction(PINSEL_I2C2);
-		scl.SetFunction(PINSEL_I2C2);
-	}
-
 	/* Apaga todas as flags do registo I2CON */
-	this->i2c->I2CONCLR = (I2CONCLR_I2ENC | I2CONCLR_STAC | I2CONCLR_STOC
-			| I2CONCLR_SIC | I2CONCLR_AAC);
+	this->i2c->I2CONCLR = (I2CONCLR_I2ENC | I2CONCLR_STAC | I2CONCLR_STOC | I2CONCLR_SIC | I2CONCLR_AAC);
 
 	/* Activação da função I2C */
 	this->i2c->I2CONSET |= I2CONSET_I2EN;

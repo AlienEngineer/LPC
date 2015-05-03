@@ -17,6 +17,7 @@ public:
 	uint32_t Transfer(uint8_t addr, uint8_t read, void *data, uint32_t size);
 	void Init(LPC_I2C_TypeDef * i2c, uint32_t frequency);
 private:
+	void InitSdaScl(uint32_t sdaPin, uint32_t sclPin, uint32_t func);
 	void Init();
 	LPC_I2C_TypeDef * i2c;
 	__IO uint32_t freq;
