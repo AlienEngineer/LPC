@@ -25,18 +25,11 @@
 
 int main(void) {
 	Thermometer thermo;
-	Timer 		timer	(SYSTICK);
+	Timer 		timer;
 	PIN 		csPin	(0, CS);
 	PIN 		resetPin(0, RESET);
 	LCD 		lcd		(&csPin, &resetPin);
 
-
-
-	lcd.ClearScreen();
-	lcd.SetCursor(10, 20);
-	lcd.Write("This is a test!");
-
-	timer.DelayMS(2000);
 	lcd.ClearScreen();
 
 	while (1) {

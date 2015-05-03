@@ -14,11 +14,20 @@ __IO uint32_t systick_init = 0;
 __IO uint32_t tick_count;
 
 Timer::Timer(uint32_t timer) {
+	this->Init(timer);
+}
+
+Timer::Timer() {
+	this->Init(SYSTICK);
+}
+
+void Timer::Init(uint32_t timer) {
 	this->timer = timer;
 
-	switch(timer) {
+	switch (timer) {
 	case SYSTICK:
-		if (systick_init) return;
+		if (systick_init)
+			return;
 
 		SysTick_Config(TIMER_MILLIS * TIMER_INTERVAL);
 		tick_count = 0;
@@ -29,24 +38,23 @@ Timer::Timer(uint32_t timer) {
 }
 
 void Timer::DelayMS(uint32_t millis) {
-	switch(this->timer) {
-	case SYSTICK:
-	{
+	switch (this->timer) {
+	case SYSTICK: {
 		__IO uint32_t curr = tick_count;
 
 		// fix millis to match the same unit as elapsed.
 		millis /= TIMER_INTERVAL;
 
-		while((tick_count-curr) != millis ) { }
+		while ((tick_count - curr) != millis) {
+		}
 	}
-	break;
+		break;
 	}
 }
 
 extern "C" {
 
-void SysTick_Handler(void)
-{
+void SysTick_Handler(void) {
 	tick_count++;
 }
 

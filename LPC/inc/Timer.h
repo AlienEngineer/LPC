@@ -16,8 +16,10 @@
 class Timer {
 public:
 	Timer(uint32_t timer);
+	Timer();
 	void DelayMS(uint32_t millis);
 private:
+	void Init(uint32_t timer);
 	uint32_t timer;
 };
 
