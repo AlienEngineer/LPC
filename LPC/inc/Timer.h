@@ -16,7 +16,6 @@
 class Timer {
 public:
 	Timer(uint32_t timer);
-	virtual ~Timer();
 	void DelayMS(uint32_t millis);
 private:
 	uint32_t timer;

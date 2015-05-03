@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>LPC_Tests</name>
+	<name>Components_Tests</name>
 	<comment></comment>
 	<projects>
 		<project>CMSIS_CORE_LPC17xx</project>

@@ -14,7 +14,6 @@
 class GPIO {
 public:
 	GPIO(LPC_GPIO_TypeDef * port);
-	virtual ~GPIO();
 
 	/**
 	 * Set the pin mode for the given pin number.

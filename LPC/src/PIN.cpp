@@ -15,10 +15,6 @@ PIN::PIN(uint32_t port, uint32_t pin) {
 
 }
 
-PIN::~PIN() {
-	// TODO Auto-generated destructor stub
-}
-
 void PIN::SetFunction(uint32_t func) {
 	__IO uint32_t * base = ((&LPC_PINCON->PINSEL0) + (this->port * 2) + ((this->pin < 16 ? 0 : 1)));
 

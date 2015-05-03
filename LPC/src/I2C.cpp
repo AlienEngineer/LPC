@@ -12,6 +12,3 @@ I2C::I2C() {
 
 }
 
-I2C::~I2C() {
-	// TODO Auto-generated destructor stub
-}

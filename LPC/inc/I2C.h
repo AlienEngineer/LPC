@@ -11,7 +11,6 @@
 class I2C {
 public:
 	I2C();
-	virtual ~I2C();
 };
 
 #endif /* I2C_H_ */

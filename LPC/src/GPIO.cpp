@@ -11,9 +11,6 @@ GPIO::GPIO(LPC_GPIO_TypeDef * port) {
 	this->GPIOPx = port;
 }
 
-GPIO::~GPIO() {
-
-}
 void GPIO::PinMode(uint32_t pin, uint32_t direction)
 {
 	pin = (1 << pin);

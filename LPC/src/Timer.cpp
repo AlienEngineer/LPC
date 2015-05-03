@@ -18,16 +18,14 @@ Timer::Timer(uint32_t timer) {
 
 	switch(timer) {
 	case SYSTICK:
+		if (systick_init) return;
+
 		SysTick_Config(TIMER_MILLIS * TIMER_INTERVAL);
 		tick_count = 0;
 		systick_init = 1;
 		break;
 	}
 
-}
-
-Timer::~Timer() {
-	// TODO Auto-generated destructor stub
 }
 
 void Timer::DelayMS(uint32_t millis) {

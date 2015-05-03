@@ -14,10 +14,11 @@
 #include <GPIO.h>
 #include <PIN.h>
 #include <Timer.h>
+#include <SPI.h>
 
 #define LED_PIN   22
 
-#define TIMER_TEST
+#define SPI_TEST
 
 
 void delay(uint32_t millis) {
@@ -90,6 +91,25 @@ void TestTIMER() {
 	}
 }
 
+void TestSPI() {
+	SPI_Config spi_config;
+
+	spi_config.LSBF = 0;
+	spi_config.SPIE = 0;
+	spi_config.BITS = 9;
+	spi_config.MASTER = 1;
+	spi_config.CPHA = 1;
+	spi_config.CPOL = 1;
+	spi_config.SPCCR = 8;
+
+
+	SPI spi(&spi_config);
+
+	spi.Send(16);
+
+	TestGPIO();
+}
+
 int main(void) {
 
 #ifdef PINSEL_TEST
@@ -98,6 +118,10 @@ int main(void) {
 
 #ifdef TIMER_TEST
 	TestTIMER();
+#endif
+
+#ifdef SPI_TEST
+	TestSPI();
 #endif
 
 	// By default test GPIO with heart beat

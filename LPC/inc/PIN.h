@@ -13,8 +13,6 @@
 class PIN {
 public:
 	PIN(uint32_t port, uint32_t pin);
-	virtual ~PIN();
-
 	void SetFunction(uint32_t func);
 private:
 	__IO uint32_t port;

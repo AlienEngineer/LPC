@@ -37,6 +37,7 @@
 								<option id="gnu.cpp.compiler.option.include.paths.2064682680" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_CORE_LPC17xx/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LPC/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/inc}&quot;"/>
 								</option>
 								<inputType id="com.crt.advproject.compiler.cpp.input.277363770" superClass="com.crt.advproject.compiler.cpp.input"/>
 							</tool>
@@ -57,6 +58,7 @@
 								<option id="gnu.c.compiler.option.include.paths.1078993837" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_CORE_LPC17xx/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LPC/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/inc}&quot;"/>
 								</option>
 								<inputType id="com.crt.advproject.compiler.input.1066541923" superClass="com.crt.advproject.compiler.input"/>
 							</tool>
@@ -68,6 +70,7 @@
 								<option id="gnu.both.asm.option.include.paths.995022807" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_CORE_LPC17xx/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LPC/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/inc}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.302478060" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 								<inputType id="com.crt.advproject.assembler.input.1062548142" name="Additional Assembly Source Files" superClass="com.crt.advproject.assembler.input"/>
@@ -87,10 +90,12 @@
 								<option id="gnu.cpp.link.option.libs.1352209661" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="CMSIS_CORE_LPC17xx"/>
 									<listOptionValue builtIn="false" value="LPC"/>
+									<listOptionValue builtIn="false" value="Components"/>
 								</option>
 								<option id="gnu.cpp.link.option.paths.1572427597" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_CORE_LPC17xx/Debug}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LPC/Debug}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/Debug}&quot;"/>
 								</option>
 								<option id="com.crt.advproject.link.cpp.crpenable.2094078481" name="Enable Code Read Protect" superClass="com.crt.advproject.link.cpp.crpenable" value="true" valueType="boolean"/>
 								<option id="com.crt.advproject.link.cpp.multicore.slave.1609850488" name="Multicore configuration" superClass="com.crt.advproject.link.cpp.multicore.slave"/>
@@ -146,6 +151,7 @@
 								<option id="gnu.cpp.compiler.option.include.paths.1971089993" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_CORE_LPC17xx/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LPC/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/inc}&quot;"/>
 								</option>
 								<inputType id="com.crt.advproject.compiler.cpp.input.859204707" superClass="com.crt.advproject.compiler.cpp.input"/>
 							</tool>
@@ -166,6 +172,7 @@
 								<option id="gnu.c.compiler.option.include.paths.1223991306" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_CORE_LPC17xx/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LPC/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/inc}&quot;"/>
 								</option>
 								<inputType id="com.crt.advproject.compiler.input.553972468" superClass="com.crt.advproject.compiler.input"/>
 							</tool>
@@ -177,6 +184,7 @@
 								<option id="gnu.both.asm.option.include.paths.1979544237" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_CORE_LPC17xx/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LPC/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/inc}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1866762729" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 								<inputType id="com.crt.advproject.assembler.input.1401613871" name="Additional Assembly Source Files" superClass="com.crt.advproject.assembler.input"/>
@@ -196,10 +204,12 @@
 								<option id="gnu.cpp.link.option.libs.878617970" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="CMSIS_CORE_LPC17xx"/>
 									<listOptionValue builtIn="false" value="LPC"/>
+									<listOptionValue builtIn="false" value="Components"/>
 								</option>
 								<option id="gnu.cpp.link.option.paths.1047067456" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_CORE_LPC17xx/Release}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LPC/Release}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/Release}&quot;"/>
 								</option>
 								<option id="com.crt.advproject.link.cpp.crpenable.1469951742" name="Enable Code Read Protect" superClass="com.crt.advproject.link.cpp.crpenable" value="true" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.1323597869" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
@@ -220,9 +230,6 @@
 	</storageModule>
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 		<project id="LPC_Tests.com.crt.advproject.projecttype.exe.337978835" name="Executable" projectType="com.crt.advproject.projecttype.exe"/>
-	</storageModule>
-	<storageModule moduleId="scannerConfiguration">
-		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="com.crt.config">
@@ -302,5 +309,17 @@
 &lt;/info&gt;&#13;
 &lt;/infoList&gt;&#13;
 &lt;/TargetConfig&gt;</projectStorage>
+	</storageModule>
+	<storageModule moduleId="scannerConfiguration">
+		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.exe.debug.1274091470;com.crt.advproject.config.exe.debug.1274091470.;com.crt.advproject.gas.exe.debug.1997355705;com.crt.advproject.assembler.input.1062548142">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.crt.advproject.GCCManagedMakePerProjectProfile"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.exe.debug.1274091470;com.crt.advproject.config.exe.debug.1274091470.;com.crt.advproject.gcc.exe.debug.648565965;com.crt.advproject.compiler.input.1066541923">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.crt.advproject.GCCManagedMakePerProjectProfile"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.exe.debug.1274091470;com.crt.advproject.config.exe.debug.1274091470.;com.crt.advproject.cpp.exe.debug.548457882;com.crt.advproject.compiler.cpp.input.277363770">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.crt.advproject.GCCManagedMakePerProjectProfileCPP"/>
+		</scannerConfigBuildInfo>
 	</storageModule>
 </cproject>

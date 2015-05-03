@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>LPC_Tests</name>
+	<name>Components</name>
 	<comment></comment>
 	<projects>
 		<project>CMSIS_CORE_LPC17xx</project>
-		<project>Components</project>
 		<project>LPC</project>
+		<project>Components</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
