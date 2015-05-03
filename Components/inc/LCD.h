@@ -9,7 +9,7 @@
 #define LCD_H_
 
 #include <common.h>
-#include <GPIO.h>
+#include <PIN.h>
 #include <SPI.h>
 
 typedef struct {
@@ -39,7 +39,7 @@ typedef struct {
 
 class LCD {
 public:
-	LCD(uint32_t CS_Pin, uint32_t Reset_Pin, GPIO * gpio);
+	LCD(PIN * csPin, PIN * resetPin);
 	void ClearArea(Coord * first, Coord * second);
 	void SetCursor(uint32_t x, uint32_t y);
 	void Write(char * str);
@@ -51,8 +51,7 @@ private:
 	void PutChar(char c, unsigned char * pFont);
 	void LineBreak();
 
-
-	GPIO * gpio;
+	PIN * csPin;
 	SPI spi;
 	Point current_position;
 };

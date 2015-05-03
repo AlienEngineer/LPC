@@ -8,6 +8,12 @@
 #include <GPIO.h>
 
 GPIO::GPIO(LPC_GPIO_TypeDef * port) {
+	this->Init(port);
+}
+
+GPIO::GPIO() { }
+
+void GPIO::Init(LPC_GPIO_TypeDef * port) {
 	this->GPIOPx = port;
 }
 

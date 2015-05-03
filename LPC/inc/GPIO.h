@@ -14,7 +14,8 @@
 class GPIO {
 public:
 	GPIO(LPC_GPIO_TypeDef * port);
-
+	GPIO();
+	void Init(LPC_GPIO_TypeDef * port);
 	/**
 	 * Set the pin mode for the given pin number.
 	 * @param direction

@@ -10,13 +10,31 @@
 #define PINSEL_Config(pinsel, pin, func) 	(pinsel |= (func << ((pin%16)*2)))
 
 PIN::PIN(uint32_t port, uint32_t pin) {
+	this->Init(port, pin);
+}
+PIN::PIN() { }
+
+void PIN::Init(uint32_t port, uint32_t pin) {
 	this->port = port;
 	this->pin = pin;
-
+	this->gpio.Init(((LPC_GPIO_TypeDef *)(LPC_GPIO0_BASE + port)));
 }
+
 
 void PIN::SetFunction(uint32_t func) {
 	__IO uint32_t * base = ((&LPC_PINCON->PINSEL0) + (this->port * 2) + ((this->pin < 16 ? 0 : 1)));
 
 	PINSEL_Config((*base), this->pin, func);
+}
+
+void PIN::Set() {
+	this->gpio.DigitalWrite(this->pin, HIGH);
+}
+
+void PIN::Clear() {
+	this->gpio.DigitalWrite(this->pin, LOW);
+}
+
+void PIN::Mode(uint32_t mode) {
+	this->gpio.PinMode(this->pin, mode);
 }

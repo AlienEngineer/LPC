@@ -150,18 +150,16 @@ Coord LCD_Coord2;
 #define Coordinate1		((Coord *)&LCD_Coord1)
 #define Coordinate2		((Coord *)&LCD_Coord2)
 
-uint32_t LCD_CD_PIN;
-
 void LCD::Command(uint32_t command) {
-	this->gpio->DigitalWrite(LCD_CD_PIN, LOW);
+	this->csPin->Clear();
 	this->spi.Send(command & 0xFF);
-	this->gpio->DigitalWrite(LCD_CD_PIN, HIGH);
+	this->csPin->Set();
 }
 
 void LCD::Data(uint32_t data) {
-	this->gpio->DigitalWrite(LCD_CD_PIN, LOW);
+	this->csPin->Clear();
 	this->spi.Send((0x100) | (data & 0xFF));
-	this->gpio->DigitalWrite(LCD_CD_PIN, HIGH);
+	this->csPin->Set();
 }
 
 void LCD::PutChar(char c, unsigned char * pFont) {
@@ -195,10 +193,8 @@ void LCD::PutChar(char c, unsigned char * pFont) {
 	this->Command(NOP);
 }
 
-LCD::LCD(uint32_t CS_Pin, uint32_t Reset_Pin, GPIO * gpio) {
+LCD::LCD(PIN * csPin, PIN * resetPin) {
 	Timer timer(SYSTICK);
-	this->gpio = gpio;
-
 	SPI_Config spi_config;
 
 	spi_config.LSBF = 0;
@@ -209,20 +205,18 @@ LCD::LCD(uint32_t CS_Pin, uint32_t Reset_Pin, GPIO * gpio) {
 	spi_config.CPOL = 1;
 	spi_config.SPCCR = 8;
 
-	gpio->PinMode(Reset_Pin, OUTPUT);
-	gpio->PinMode(CS_Pin, OUTPUT);
-
+	csPin->Mode(OUTPUT);
+	resetPin->Mode(OUTPUT);
 
 	this->spi.Init(&spi_config);
+	this->csPin = csPin;
 
-	LCD_CD_PIN = CS_Pin;
-
-	gpio->DigitalWrite(Reset_Pin, LOW);
+	resetPin->Clear();
 	timer.DelayMS(100);
-	gpio->DigitalWrite(Reset_Pin, HIGH);
+	resetPin->Set();
 	timer.DelayMS(100);
 
-	gpio->DigitalWrite(LCD_CD_PIN, LOW);
+	csPin->Clear();
 
 	this->Command(DISCTL);
 	this->Data(0x00);
@@ -249,10 +243,8 @@ LCD::LCD(uint32_t CS_Pin, uint32_t Reset_Pin, GPIO * gpio) {
 
 	this->Command(DISON);
 
-	gpio->DigitalWrite(LCD_CD_PIN, HIGH);	// start high
+	csPin->Set();
 }
-
-
 
 void LCD::ClearArea(Coord * first, Coord * second) {
 	int areaSize = first->size * second->size;
@@ -267,7 +259,7 @@ void LCD::ClearArea(Coord * first, Coord * second) {
 	this->Command(RAMWR);
 
 	while (areaSize--) {
-		this->Data (BLACK);
+		this->Data(BLACK);
 		this->Data(BLACK);
 	}
 
@@ -314,6 +306,7 @@ void LCD::Write(char * str) {
 		}
 
 		this->PutChar(*str++, (unsigned char *) font8x8);
-		this->SetCursor(this->current_position.x + COLUMN_WIDTH, this->current_position.y);
+		this->SetCursor(this->current_position.x + COLUMN_WIDTH,
+				this->current_position.y);
 	}
 }

@@ -17,12 +17,14 @@
 
 #include <LCD.h>
 
-#define LCD_RESET		2
-#define CS_PIN 			16
+#define RESET		2
+#define CS 			16
 
 int main(void) {
-	GPIO gpio0(LPC_GPIO0);
-	LCD lcd(CS_PIN, LCD_RESET, &gpio0);
+	PIN csPin(0, CS);
+	PIN resetPin(0, RESET);
+
+	LCD lcd(&csPin, &resetPin);
 
 	lcd.ClearScreen();
 	lcd.SetCursor(10, 20);
