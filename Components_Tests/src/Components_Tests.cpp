@@ -14,7 +14,6 @@
 
 #include <cr_section_macros.h>
 
-#include <stdio.h>
 #include <LCD.h>
 #include <Thermometer.h>
 #include <Timer.h>
@@ -22,7 +21,7 @@
 #define RESET		2
 #define CS 			16
 
-char aux_buf[20];
+
 
 int main(void) {
 	Thermometer thermo;
@@ -43,10 +42,8 @@ int main(void) {
 	while (1) {
 		int8_t temp = thermo.GetTemperature();
 
-		sprintf(aux_buf, "Temp:%03d", temp);
-
 		lcd.SetCursor(10, 20);
-		lcd.Write(aux_buf);
+		lcd.Writef("Temp:%03d", temp);
 
 		timer.DelayMS(200);
 	}

@@ -9,6 +9,8 @@
 #include <SPI.h>
 #include <Timer.h>
 #include <GPIO.h>
+#include <stdio.h>
+#include <stdarg.h>
 
 const unsigned char font8x8[97][8] = { 0x08, 0x08, 0x08, 0x00, 0x00, 0x00, 0x00,
 		0x00, // columns, rows, num_bytes_per_char
@@ -298,6 +300,8 @@ void LCD::LineBreak() {
 	this->current_position.y += LINE_HEIGHT;
 }
 
+
+
 void LCD::Write(char const * str) {
 	while (*str) {
 
@@ -309,4 +313,15 @@ void LCD::Write(char const * str) {
 		this->SetCursor(this->current_position.x + COLUMN_WIDTH,
 				this->current_position.y);
 	}
+}
+
+void LCD::Writef(const char * format, ...) {
+	char buffer[20];
+
+	va_list args;
+	va_start(args, format);
+	vsprintf  (buffer, format, args);
+	va_end(args);
+
+	this->Write(buffer);
 }

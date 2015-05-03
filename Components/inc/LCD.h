@@ -42,6 +42,7 @@ public:
 	LCD(PIN * csPin, PIN * resetPin);
 	void ClearArea(Coord * first, Coord * second);
 	void SetCursor(uint32_t x, uint32_t y);
+	void Writef(char const * str, ...);
 	void Write(char const * str);
 	void ClearScreen();
 
