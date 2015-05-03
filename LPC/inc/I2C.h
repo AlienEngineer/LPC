@@ -13,7 +13,9 @@
 class I2C {
 public:
 	I2C(LPC_I2C_TypeDef * i2c, uint32_t freq);
-	uint32_t Transfer(uint8_t addr, int read, void *data, uint32_t size);
+	I2C();
+	uint32_t Transfer(uint8_t addr, uint8_t read, void *data, uint32_t size);
+	void Init(LPC_I2C_TypeDef * i2c, uint32_t frequency);
 private:
 	void Init();
 	LPC_I2C_TypeDef * i2c;

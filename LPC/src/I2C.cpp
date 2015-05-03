@@ -32,6 +32,14 @@
 #define PINSEL_I2C2		0x2
 
 I2C::I2C(LPC_I2C_TypeDef * i2c, uint32_t frequency) {
+	this->Init(i2c, frequency);
+}
+
+I2C::I2C() {
+}
+
+
+void I2C::Init(LPC_I2C_TypeDef * i2c, uint32_t frequency) {
 	this->i2c = i2c;
 	this->freq = frequency;
 }
@@ -77,7 +85,7 @@ void I2C::Init() {
  * @param  freq: Frequência com que os dados são transferidos.
  * @retval : Valores do registo I2CSTAT do controlador I2C definidos no manual do fabricante.
  */
-uint32_t I2C::Transfer(uint8_t addr, int read, void *data, uint32_t size) {
+uint32_t I2C::Transfer(uint8_t addr, uint8_t read, void *data, uint32_t size) {
 	uint32_t i = 0;
 	char buffer[size];
 

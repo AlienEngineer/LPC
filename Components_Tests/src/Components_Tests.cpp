@@ -14,24 +14,41 @@
 
 #include <cr_section_macros.h>
 
-
+#include <stdio.h>
 #include <LCD.h>
+#include <Thermometer.h>
+#include <Timer.h>
 
 #define RESET		2
 #define CS 			16
 
-int main(void) {
-	PIN csPin(0, CS);
-	PIN resetPin(0, RESET);
+char aux_buf[20];
 
-	LCD lcd(&csPin, &resetPin);
+int main(void) {
+	Thermometer thermo;
+	Timer 		timer	(SYSTICK);
+	PIN 		csPin	(0, CS);
+	PIN 		resetPin(0, RESET);
+	LCD 		lcd		(&csPin, &resetPin);
+
+
 
 	lcd.ClearScreen();
 	lcd.SetCursor(10, 20);
 	lcd.Write("This is a test!");
 
-	while (1) {
+	timer.DelayMS(2000);
+	lcd.ClearScreen();
 
+	while (1) {
+		int8_t temp = thermo.GetTemperature();
+
+		sprintf(aux_buf, "Temp:%03d", temp);
+
+		lcd.SetCursor(10, 20);
+		lcd.Write(aux_buf);
+
+		timer.DelayMS(200);
 	}
 
     return 0 ;
