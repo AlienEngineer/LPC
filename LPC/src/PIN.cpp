@@ -7,11 +7,12 @@
 
 #include <PIN.h>
 
-#define PINSEL_Config(pinsel, pin, func) 	(pinsel |= (func << ((pin%16)*2)))
+
 
 PIN::PIN(uint32_t port, uint32_t pin) {
 	this->Init(port, pin);
 }
+
 PIN::PIN() { }
 
 void PIN::Init(uint32_t port, uint32_t pin) {
@@ -20,11 +21,12 @@ void PIN::Init(uint32_t port, uint32_t pin) {
 	this->gpio.Init(((LPC_GPIO_TypeDef *)(LPC_GPIO0_BASE + port)));
 }
 
-
 void PIN::SetFunction(uint32_t func) {
-	__IO uint32_t * base = ((&LPC_PINCON->PINSEL0) + (this->port * 2) + ((this->pin < 16 ? 0 : 1)));
-
-	PINSEL_Config((*base), this->pin, func);
+	// __IO uint32_t * base = ((&LPC_PINCON->PINSEL0) + (this->port * 2) + ((this->pin < 16 ? 0 : 1)));
+    // __IO uint32_t * base = PINSEL_BASE(this->port, this->pin);
+    
+	// PINSEL_Config((*base), this->pin, func);
+    PINSEL(this->port, this->pin, func);
 }
 
 void PIN::Set() {

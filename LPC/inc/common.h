@@ -20,4 +20,6 @@
 #define HIGH	(uint32_t)1
 #define LOW		(uint32_t)0
 
+#define BUSY    (uint32_t)1
+
 #endif /* COMMON_H_ */
