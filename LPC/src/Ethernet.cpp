@@ -10,19 +10,45 @@
 #define EMAC_FULLDUPLEX    (1 << 0)
 #define CMD_FULLDUPLEX     (1 << 10)
 
-/* EMAC Memory Buffer configuration for 16K Ethernet RAM. */
-#define NUM_RX_FRAG 		4 /* Num.of RX Fragments 4*1536= 6.0kB */
-#define NUM_TX_FRAG 		2 /* Num.of TX Fragments 3*1536= 4.6kB */
-#define ETH_FRAG_SIZE 		1536 /* Packet Fragment size 1536 Bytes */
-#define ETH_MAX_FLEN 		1536 /* Max. Ethernet Frame Size */
+/* REGISTER MAC1 page 159 */
+#define EMAC_MAC1_RECEIVE_ENABLE	(1 << 0)
+#define EMAC_MAC1_PASS_ALL_FRAMES	(1 << 1)
+#define EMAC_MAC1_RX_FLOW_CONTROL	(1 << 2)
+#define EMAC_MAC1_TX_FLOW_CONTROL	(1 << 3)
+#define EMAC_MAC1_LOOPBACK			(1 << 4)
+#define EMAC_MAC1_RESET_TX			(1 << 8)
+#define EMAC_MAC1_RESET_MCS_TX		(1 << 9)
+#define EMAC_MAC1_RESET_RX			(1 << 10)
+#define EMAC_MAC1_RESET_MCS_RX		(1 << 11)
+#define EMAC_MAC1_SIMULATION_RESET	(1 << 14)
+#define EMAC_MAC1_SOFT_RESET		(1 << 15)
 
-/* EMAC variables located in AHB SRAM bank 1 */
-#define RX_DESC_BASE 		0x2007c000
-#define RX_STAT_BASE 		(RX_DESC_BASE + NUM_RX_FRAG*8)
-#define TX_DESC_BASE 		(RX_STAT_BASE + NUM_RX_FRAG*8)
-#define TX_STAT_BASE 		(TX_DESC_BASE + NUM_TX_FRAG*8)
-#define RX_BUF_BASE 		(TX_STAT_BASE + NUM_TX_FRAG*4)
-#define TX_BUF_BASE 		(RX_BUF_BASE + NUM_RX_FRAG*ETH_FRAG_SIZE)
+/* REGISTER MAC2 page 160 */
+#define EMAC_MAC2_FULL_DUPLEX		(1 << 0)
+#define EMAC_MAC2_FRAME_LEN_CHECK	(1 << 1)
+#define EMAC_MAC2_HUGE_FRAME_ENABLE	(1 << 2)
+#define EMAC_MAC2_DELAYED_CRC		(1 << 3)
+#define EMAC_MAC2_CRC_ENABLE		(1 << 4)
+#define EMAC_MAC2_PAD_CRC_ENABLE	(1 << 5)
+#define EMAC_MAC2_VLAN_PAD_ENABLE	(1 << 6)
+#define EMAC_MAC2_AUTO_PAD_ENABLE	(1 << 7)
+#define EMAC_MAC2_PURE_PREAMBLE		(1 << 8)
+#define EMAC_MAC2_LONG_PREAMBLE		(1 << 9)
+#define EMAC_MAC2_NO_BACKOFF		(1 << 12)
+#define EMAC_MAC2_BACK_PRESSURE		(1 << 13)
+#define EMAC_MAC2_EXCESS_DEFER		(1 << 14)
+
+/* REGISTER Command page 167 */
+#define EMAC_CMD_RX_ENABLE			(1 << 0)
+#define EMAC_CMD_TX_ENABLE			(1 << 1)
+#define EMAC_CMD_REG_RESET			(1 << 3)
+#define EMAC_CMD_TX_RESET			(1 << 4)
+#define EMAC_CMD_RX_RESET			(1 << 5)
+#define EMAC_CMD_PASS_RUNT_FRAME	(1 << 6)
+#define EMAC_CMD_PASS_RX_FILTER		(1 << 7)
+#define EMAC_CMD_TX_FLOW_CONTROL	(1 << 8)
+#define EMAC_CMD_RMII				(1 << 9)
+#define EMAC_CMD_FULLDUPLEX			(1 << 10)
 
 Ethernet::Ethernet(Timer * timer) {
     RMII rmii;
@@ -48,7 +74,9 @@ Ethernet::Ethernet(Timer * timer) {
     LPC_EMAC->MCFG = (0xF << 2); // divide clock by 64
     LPC_EMAC->MAC2 = (1<<5) | (1<<4);
 	LPC_EMAC->IPGR = 0x12;
-    LPC_EMAC->Command = (1 << 9) | (1 << 7) | (1 << 6);
+	LPC_EMAC->IPGT = 0x12; // Default for Half-Duplex
+	LPC_EMAC->MAXF = ETH_MAX_FLEN;
+    LPC_EMAC->Command = EMAC_CMD_RMII | EMAC_CMD_PASS_RX_FILTER | EMAC_CMD_PASS_RUNT_FRAME;
     LPC_EMAC->RxFilterCtrl = (1<<0) | (1<<1) | (1<<2) | (1<<3) | (1<<4);
     
     // Reset EMAC
@@ -62,6 +90,12 @@ Ethernet::Ethernet(Timer * timer) {
     {
         LPC_EMAC->MAC2 |= EMAC_FULLDUPLEX; // Full duplex
         LPC_EMAC->Command |= CMD_FULLDUPLEX;
+        LPC_EMAC->IPGT = 0x15;
+    }
+
+    if (flags & RMII_SPEED100)
+    {
+    	LPC_EMAC->SUPP = (1<<8);
     }
     
     // RECEIVE
@@ -92,24 +126,24 @@ void Ethernet::Enable()
     this->timer->DelayMS(100);
 }
 
-void Ethernet::Reset() 
+void Ethernet::Reset()
 {
     uint32_t mac1 = LPC_EMAC->MAC1;
     uint32_t cmd = LPC_EMAC->Command;
     uint32_t mcfg = LPC_EMAC->MCFG;
-    
+
     // Set all resets!
-    LPC_EMAC->MAC1 = (1<<8) | (1<<9) | (1<<10) | (1<<11) | (1<<14);
+    LPC_EMAC->MAC1 = EMAC_MAC1_RESET_TX | EMAC_MAC1_RESET_MCS_TX | EMAC_MAC1_RESET_RX | EMAC_MAC1_RESET_MCS_RX | EMAC_MAC1_SIMULATION_RESET | EMAC_MAC1_SOFT_RESET;
     LPC_EMAC->Command = (1 << 3) | (1 << 4) | (1 << 5);
     LPC_EMAC->MCFG = (0xF << 2) | (1<<15);
-	
+
     this->timer->DelayMS(20);
-    
+
     // Clear all resets!
     LPC_EMAC->MAC1 = mac1 & ~LPC_EMAC->MAC1;
 	LPC_EMAC->MCFG = mcfg & ~LPC_EMAC->MCFG;
     LPC_EMAC->Command = cmd & ~LPC_EMAC->Command;
-    
+
     this->timer->DelayMS(100);
 }
 
