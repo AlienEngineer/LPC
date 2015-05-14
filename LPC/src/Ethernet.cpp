@@ -58,7 +58,7 @@ Ethernet::Ethernet(Timer * timer) {
     rmii.Reset();
     uint32_t flags = rmii.Autonegotiate();
     
-    if (flags & FULLDUPLEX) 
+    if (flags & RMII_FULLDUPLEX)
     {
         LPC_EMAC->MAC2 |= EMAC_FULLDUPLEX; // Full duplex
         LPC_EMAC->Command |= CMD_FULLDUPLEX;
@@ -71,11 +71,11 @@ Ethernet::Ethernet(Timer * timer) {
     LPC_EMAC->RxStatus = RX_STAT_BASE;
 
     // SEND
+    LPC_EMAC->TxProduceIndex = 0;
     LPC_EMAC->TxDescriptor = TX_DESC_BASE;
     LPC_EMAC->TxDescriptorNumber = NUM_TX_FRAG - 1;
     LPC_EMAC->TxStatus = TX_STAT_BASE;
     
-
     LPC_EMAC->SA0 = 0x1234;
     LPC_EMAC->SA1 = 0x1;
     LPC_EMAC->SA2 = 0x2;
@@ -89,7 +89,7 @@ void Ethernet::Enable()
     LPC_EMAC->Command |= (1<<0) | (1<<1);
     LPC_EMAC->MAC1 |= 1;
 
-    TIMER_Delay(100);
+    this->timer->DelayMS(100);
 }
 
 void Ethernet::Reset() 
@@ -103,22 +103,22 @@ void Ethernet::Reset()
     LPC_EMAC->Command = (1 << 3) | (1 << 4) | (1 << 5);
     LPC_EMAC->MCFG = (0xF << 2) | (1<<15);
 	
-    this->DelayMS(20);
+    this->timer->DelayMS(20);
     
     // Clear all resets!
     LPC_EMAC->MAC1 = mac1 & ~LPC_EMAC->MAC1;
 	LPC_EMAC->MCFG = mcfg & ~LPC_EMAC->MCFG;
     LPC_EMAC->Command = cmd & ~LPC_EMAC->Command;
     
-    this->DelayMS(100);
+    this->timer->DelayMS(100);
 }
 
-void Ethernet::Send(uint8_t * data, uint32_t size)
+void Ethernet::Send(void * data, uint32_t size)
 {
     
 }
 
-void Ethernet::Receive(uint8_t * buffer, uint32_t bufferSize)
+void Ethernet::Receive(void * buffer, uint32_t bufferSize)
 {
     
 }

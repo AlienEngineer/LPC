@@ -3,12 +3,18 @@
 #define ETHERNET_H_
 
 #include <common.h>
+#include <Timer.h>
+
+typedef struct {
+    uint32_t info;
+    uint32_t hash;
+} EthernetStatus;
 
 class Ethernet {
 public:
-	Ethernet();
-    void Send(uint8_t * data, uint32_t size);
-    void Receive(uint8_t * data, uint32_t size);
+	Ethernet(Timer * timer);
+    void Send(void * data, uint32_t size);
+    void Receive(void * buffer, uint32_t bufferSize);
 private:
     Timer * timer;
     void Reset();
