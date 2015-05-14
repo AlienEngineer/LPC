@@ -37,7 +37,7 @@ typedef struct {
 class Ethernet {
 public:
 	Ethernet(Timer * timer);
-    void Send(void * data, uint32_t size);
+	uint32_t Send(void * data, uint32_t size);
     void Receive(void * buffer, uint32_t bufferSize);
 private:
     Timer * timer;

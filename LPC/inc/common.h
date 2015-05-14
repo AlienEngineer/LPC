@@ -14,12 +14,14 @@
 #define TRUE 	(uint32_t)1
 #define FALSE 	(uint32_t)0
 
-#define OUTPUT	(uint32_t)1
-#define INPUT	(uint32_t)0
+#define OUTPUT	TRUE
+#define INPUT	FALSE
 
-#define HIGH	(uint32_t)1
-#define LOW		(uint32_t)0
+#define HIGH	TRUE
+#define LOW		FALSE
 
-#define BUSY    (uint32_t)1
+#define BUSY    TRUE
+#define FULL    TRUE
+
 
 #endif /* COMMON_H_ */

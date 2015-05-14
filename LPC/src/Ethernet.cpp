@@ -3,6 +3,7 @@
 #include <PIN.h>
 #include <RMII.h>
 #include <TIMER.h>
+#include <string.h>
 
 #define PINSEL_ETHERNET     1
 #define PCOMP_ETHERNET     (1<<30)
@@ -50,6 +51,15 @@
 #define EMAC_CMD_RMII				(1 << 9)
 #define EMAC_CMD_FULLDUPLEX			(1 << 10)
 
+/* REGISTER MCFG page 163 */
+#define EMAC_MCFG_MII_RESET			(1 << 15)
+#define EMAC_MCFG_SPEED_DIVIDER		(0xF << 2)  // divide clock by 64 see manual for other speeds
+
+/* REGISTER IPGT page 161 */
+#define EMAC_IPGT_HALFDUPLEX		(0x12)
+#define EMAC_IPGT_FULLDUPLEX		(0x15)
+
+
 Ethernet::Ethernet(Timer * timer) {
     RMII rmii;
     
@@ -71,10 +81,10 @@ Ethernet::Ethernet(Timer * timer) {
     LPC_SC->PCONP |= PCOMP_ETHERNET;
     
     LPC_EMAC->MAC1 = (1 << 1);
-    LPC_EMAC->MCFG = (0xF << 2); // divide clock by 64
+    LPC_EMAC->MCFG = EMAC_MCFG_SPEED_DIVIDER;
     LPC_EMAC->MAC2 = (1<<5) | (1<<4);
 	LPC_EMAC->IPGR = 0x12;
-	LPC_EMAC->IPGT = 0x12; // Default for Half-Duplex
+	LPC_EMAC->IPGT = EMAC_IPGT_HALFDUPLEX; // Default for Half-Duplex
 	LPC_EMAC->MAXF = ETH_MAX_FLEN;
     LPC_EMAC->Command = EMAC_CMD_RMII | EMAC_CMD_PASS_RX_FILTER | EMAC_CMD_PASS_RUNT_FRAME;
     LPC_EMAC->RxFilterCtrl = (1<<0) | (1<<1) | (1<<2) | (1<<3) | (1<<4);
@@ -90,7 +100,7 @@ Ethernet::Ethernet(Timer * timer) {
     {
         LPC_EMAC->MAC2 |= EMAC_FULLDUPLEX; // Full duplex
         LPC_EMAC->Command |= CMD_FULLDUPLEX;
-        LPC_EMAC->IPGT = 0x15;
+        LPC_EMAC->IPGT = EMAC_IPGT_FULLDUPLEX;
     }
 
     if (flags & RMII_SPEED100)
@@ -134,8 +144,8 @@ void Ethernet::Reset()
 
     // Set all resets!
     LPC_EMAC->MAC1 = EMAC_MAC1_RESET_TX | EMAC_MAC1_RESET_MCS_TX | EMAC_MAC1_RESET_RX | EMAC_MAC1_RESET_MCS_RX | EMAC_MAC1_SIMULATION_RESET | EMAC_MAC1_SOFT_RESET;
-    LPC_EMAC->Command = (1 << 3) | (1 << 4) | (1 << 5);
-    LPC_EMAC->MCFG = (0xF << 2) | (1<<15);
+    LPC_EMAC->Command = EMAC_CMD_REG_RESET | EMAC_CMD_RX_RESET | EMAC_CMD_TX_RESET;
+    LPC_EMAC->MCFG = EMAC_MCFG_MII_RESET;
 
     this->timer->DelayMS(20);
 
@@ -147,12 +157,31 @@ void Ethernet::Reset()
     this->timer->DelayMS(100);
 }
 
-void Ethernet::Send(void * data, uint32_t size)
+uint32_t Ethernet::Send(void * data, uint32_t size)
 {
-    
+
+	if (LPC_EMAC->TxProduceIndex == LPC_EMAC->TxConsumeIndex -1) {
+		return FULL;
+	}
+
+	void * txbuffer = (void *)(TX_BUF_BASE + LPC_EMAC->TxProduceIndex*ETH_FRAG_SIZE);
+
+	// Copy data to the TxBuffer to send.
+	memcpy(txbuffer, data, size);
+
+	// Tell hardware to dispatch data
+	++LPC_EMAC->TxProduceIndex;
+
+	// Reset produce index to zero.
+	if (LPC_EMAC->TxProduceIndex == NUM_TX_FRAG - 1)
+	{
+		LPC_EMAC->TxProduceIndex = 0;
+	}
+
+	return size;
 }
 
 void Ethernet::Receive(void * buffer, uint32_t bufferSize)
 {
-    
+
 }
