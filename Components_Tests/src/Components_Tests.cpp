@@ -28,7 +28,7 @@ int main(void) {
 	PIN 		csPin	(0, CS);
 	PIN 		resetPin(0, RESET);
 	LCD 		lcd		(&csPin, &resetPin);
-	Ethernet    ethernet(&timer);
+	Ethernet::Init();
 
 	lcd.ClearScreen();
 

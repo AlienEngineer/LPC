@@ -38,14 +38,16 @@ typedef struct {
 	uint32_t control; /* 0:10 size */
 } EthernetDescriptor;
 
+
+
 class Ethernet {
 public:
-	Ethernet(Timer * timer);
+	// Ethernet(Timer * timer);
+	static void Init();
 	static uint32_t Send(void * data, uint32_t size);
 	static uint32_t Receive(void * buffer, uint32_t bufferSize);
 private:
-	Timer * timer;
-	void Enable();
+	static bool initialized;
 };
 
 

@@ -113,8 +113,7 @@ void TestSPI() {
 }
 
 void TestETHERNET() {
-	Timer timer;
-	Ethernet ethernet(&timer);
+	Ethernet::Init();
 
 	while(1) {
 
