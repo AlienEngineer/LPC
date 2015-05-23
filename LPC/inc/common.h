@@ -21,7 +21,9 @@
 #define LOW		FALSE
 
 #define BUSY    TRUE
+
 #define FULL    TRUE
+#define EMPTY   FALSE
 
 
 #endif /* COMMON_H_ */

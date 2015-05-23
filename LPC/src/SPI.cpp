@@ -1,10 +1,3 @@
-/*
- * SPI.cpp
- *
- *  Created on: 02/05/2015
- *      Author: Alien
- */
-
 #include <SPI.h>
 #include <PIN.h>
 

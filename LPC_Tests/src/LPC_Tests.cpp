@@ -13,12 +13,14 @@
 
 #include <GPIO.h>
 #include <PIN.h>
-#include <Timer.h>
+#include <Timers.h>
 #include <SPI.h>
+#include <Ethernet.h>
+#include <stdio.h>
 
 #define LED_PIN   22
 
-#define SPI_TEST
+#define PINSEL_TEST
 
 
 void delay(uint32_t millis) {
@@ -110,6 +112,17 @@ void TestSPI() {
 	TestGPIO();
 }
 
+void TestETHERNET() {
+	Timer timer;
+	Ethernet ethernet(&timer);
+
+	while(1) {
+
+
+	}
+
+}
+
 int main(void) {
 
 #ifdef PINSEL_TEST
@@ -122,6 +135,10 @@ int main(void) {
 
 #ifdef SPI_TEST
 	TestSPI();
+#endif
+
+#ifdef ETHERNET_TEST
+	TestETHERNET();
 #endif
 
 	// By default test GPIO with heart beat

@@ -3,7 +3,7 @@
 #define ETHERNET_H_
 
 #include <common.h>
-#include <Timer.h>
+#include <Timers.h>
 
 /* EMAC Memory Buffer configuration for 16K Ethernet RAM. */
 #define NUM_RX_FRAG 		4 /* Num.of RX Fragments 4*1536= 6.0kB */
@@ -33,16 +33,20 @@ typedef struct {
     uint8_t payload[ETH_FRAG_SIZE-(ETH_ADDR_SIZE*2+7)];
 } EthernetFrame;
 
+typedef struct {
+	EthernetFrame * frame;
+	uint32_t control; /* 0:10 size */
+} EthernetDescriptor;
 
 class Ethernet {
 public:
 	Ethernet(Timer * timer);
-	uint32_t Send(void * data, uint32_t size);
-    void Receive(void * buffer, uint32_t bufferSize);
+	static uint32_t Send(void * data, uint32_t size);
+	static uint32_t Receive(void * buffer, uint32_t bufferSize);
 private:
-    Timer * timer;
-    void Reset();
-    void Enable();
+	Timer * timer;
+	void Enable();
 };
+
 
 #endif /* ETHERNET_H_ */

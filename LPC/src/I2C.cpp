@@ -1,10 +1,3 @@
-/*
- * I2C.cpp
- *
- *  Created on: 02/05/2015
- *      Author: Alien
- */
-
 #include <I2C.h>
 #include <string.h>
 #include <PIN.h>

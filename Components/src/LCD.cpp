@@ -1,13 +1,8 @@
-/*
- * LCD.cpp
- *
- *  Created on: 02/05/2015
- *      Author: Alien
- */
+#ifdef LCD_ENABLE
 
 #include <LCD.h>
 #include <SPI.h>
-#include <Timer.h>
+#include <Timers.h>
 #include <GPIO.h>
 #include <stdio.h>
 #include <stdarg.h>
@@ -325,3 +320,5 @@ void LCD::Writef(const char * format, ...) {
 
 	this->Write(buffer);
 }
+
+#endif /* LCD_ENABLE */

@@ -1,9 +1,4 @@
-/*
- * Thermometer.cpp
- *
- *  Created on: 03/05/2015
- *      Author: Alien
- */
+#ifdef THERMOMETHER_ENABLE
 
 #include <Thermometer.h>
 
@@ -63,3 +58,5 @@ int8_t Thermometer::GetTemperature() {
 
 	return (int8_t) buffer[0];
 }
+
+#endif /* THERMOMETHER_ENABLE */

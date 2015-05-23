@@ -36,6 +36,8 @@
 									<listOptionValue builtIn="false" value="CORE_M3"/>
 									<listOptionValue builtIn="false" value="__USE_CMSIS=CMSIS_CORE_LPC17xx"/>
 									<listOptionValue builtIn="false" value="__LPC17XX__"/>
+									<listOptionValue builtIn="false" value="THERMOMETHER_ENABLE=1"/>
+									<listOptionValue builtIn="false" value="LCD_ENABLE=1"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.other.other.1597612536" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -fno-builtin -ffunction-sections -fdata-sections -fno-rtti -fno-exceptions" valueType="string"/>
 								<option id="gnu.cpp.compiler.option.include.paths.1633283466" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
@@ -43,6 +45,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_CORE_LPC17xx/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LPC/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/src/uIP}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/src/webserver}&quot;"/>
 								</option>
 								<option id="com.crt.advproject.cpp.hdrlib.1235402514" name="Library headers" superClass="com.crt.advproject.cpp.hdrlib" value="Newlib" valueType="enumerated"/>
 								<inputType id="com.crt.advproject.compiler.cpp.input.419536631" superClass="com.crt.advproject.compiler.cpp.input"/>
@@ -57,6 +61,8 @@
 									<listOptionValue builtIn="false" value="__USE_CMSIS=CMSIS_CORE_LPC17xx"/>
 									<listOptionValue builtIn="false" value="__LPC17XX__"/>
 									<listOptionValue builtIn="false" value="__NEWLIB__"/>
+									<listOptionValue builtIn="false" value="THERMOMETHER_ENABLE=1"/>
+									<listOptionValue builtIn="false" value="LCD_ENABLE=1"/>
 								</option>
 								<option id="gnu.c.compiler.option.misc.other.365183373" name="Other flags" superClass="gnu.c.compiler.option.misc.other" value="-c -fmessage-length=0 -fno-builtin -ffunction-sections -fdata-sections" valueType="string"/>
 								<option id="gnu.c.compiler.option.include.paths.730556806" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
@@ -64,6 +70,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_CORE_LPC17xx/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LPC/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/src/uIP}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/src/webserver}&quot;"/>
 								</option>
 								<option id="com.crt.advproject.gcc.hdrlib.1131632275" name="Library headers" superClass="com.crt.advproject.gcc.hdrlib" value="Newlib" valueType="enumerated"/>
 								<inputType id="com.crt.advproject.compiler.input.942340210" superClass="com.crt.advproject.compiler.input"/>
@@ -77,6 +85,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_CORE_LPC17xx/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LPC/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/src/uIP}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/src/webserver}&quot;"/>
 								</option>
 								<option id="com.crt.advproject.gas.hdrlib.139730491" name="Library headers" superClass="com.crt.advproject.gas.hdrlib" value="Newlib" valueType="enumerated"/>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.866261196" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
@@ -87,7 +97,7 @@
 					</folderInfo>
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="inc"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry excluding="webserver/httpd-fsdata.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -128,6 +138,8 @@
 									<listOptionValue builtIn="false" value="CORE_M3"/>
 									<listOptionValue builtIn="false" value="__USE_CMSIS=CMSIS_CORE_LPC17xx"/>
 									<listOptionValue builtIn="false" value="__LPC17XX__"/>
+									<listOptionValue builtIn="false" value="THERMOMETHER_ENABLE=1"/>
+									<listOptionValue builtIn="false" value="LCD_ENABLE=1"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.other.other.824140630" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -fno-builtin -ffunction-sections -fdata-sections -fno-rtti -fno-exceptions" valueType="string"/>
 								<option id="gnu.cpp.compiler.option.optimization.flags.2044676243" name="Other optimization flags" superClass="gnu.cpp.compiler.option.optimization.flags" value="-Os" valueType="string"/>
@@ -136,6 +148,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_CORE_LPC17xx/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LPC/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/src/uIP}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/src/webserver}&quot;"/>
 								</option>
 								<option id="com.crt.advproject.cpp.hdrlib.1314582389" name="Library headers" superClass="com.crt.advproject.cpp.hdrlib" value="Newlib" valueType="enumerated"/>
 								<inputType id="com.crt.advproject.compiler.cpp.input.345894529" superClass="com.crt.advproject.compiler.cpp.input"/>
@@ -150,6 +164,8 @@
 									<listOptionValue builtIn="false" value="__USE_CMSIS=CMSIS_CORE_LPC17xx"/>
 									<listOptionValue builtIn="false" value="__LPC17XX__"/>
 									<listOptionValue builtIn="false" value="__NEWLIB__"/>
+									<listOptionValue builtIn="false" value="THERMOMETHER_ENABLE=1"/>
+									<listOptionValue builtIn="false" value="LCD_ENABLE=1"/>
 								</option>
 								<option id="gnu.c.compiler.option.misc.other.62083392" name="Other flags" superClass="gnu.c.compiler.option.misc.other" value="-c -fmessage-length=0 -fno-builtin -ffunction-sections -fdata-sections" valueType="string"/>
 								<option id="gnu.c.compiler.option.include.paths.430480460" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
@@ -157,6 +173,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_CORE_LPC17xx/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LPC/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/src/uIP}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/src/webserver}&quot;"/>
 								</option>
 								<option id="com.crt.advproject.gcc.hdrlib.1629038484" name="Library headers" superClass="com.crt.advproject.gcc.hdrlib" value="Newlib" valueType="enumerated"/>
 								<inputType id="com.crt.advproject.compiler.input.1565435398" superClass="com.crt.advproject.compiler.input"/>
@@ -170,6 +188,8 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_CORE_LPC17xx/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LPC/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/src/uIP}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/src/webserver}&quot;"/>
 								</option>
 								<option id="com.crt.advproject.gas.hdrlib.1335982815" name="Library headers" superClass="com.crt.advproject.gas.hdrlib" value="Newlib" valueType="enumerated"/>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1717864043" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
@@ -180,7 +200,7 @@
 					</folderInfo>
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="inc"/>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
+						<entry excluding="webserver/httpd-fsdata.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -190,18 +210,12 @@
 	<storageModule moduleId="cdtBuildSystem" version="4.0.0">
 		<project id="Components.com.crt.advproject.projecttype.lib.1624334644" name="Static Library" projectType="com.crt.advproject.projecttype.lib"/>
 	</storageModule>
-	<storageModule moduleId="scannerConfiguration">
-		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-	</storageModule>
 	<storageModule moduleId="org.eclipse.cdt.core.LanguageSettingsProviders"/>
 	<storageModule moduleId="com.crt.config">
 		<projectStorage>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&#13;
 &lt;TargetConfig&gt;&#13;
 &lt;Properties property_0="" property_2="LPC175x_6x_512.cfx" property_3="NXP" property_4="LPC1769" property_count="5" version="70200"/&gt;&#13;
-&lt;infoList vendor="NXP"&gt;&#13;
-&lt;info chip="LPC1769" flash_driver="LPC175x_6x_512.cfx" match_id="0x26113F37" name="LPC1769" package="lpc17_lqfp100.xml" stub="crt_emu_cm3_nxp"&gt;&#13;
-&lt;chip&gt;&#13;
-&lt;name&gt;LPC1769&lt;/name&gt;&#13;
+&lt;infoList vendor="NXP"&gt;&lt;info chip="LPC1769" flash_driver="LPC175x_6x_512.cfx" match_id="0x26113F37" name="LPC1769" package="lpc17_lqfp100.xml" stub="crt_emu_cm3_nxp"&gt;&lt;chip&gt;&lt;name&gt;LPC1769&lt;/name&gt;&#13;
 &lt;family&gt;LPC17xx&lt;/family&gt;&#13;
 &lt;vendor&gt;NXP (formerly Philips)&lt;/vendor&gt;&#13;
 &lt;reset board="None" core="Real" sys="Real"/&gt;&#13;
@@ -263,8 +277,7 @@
 &lt;peripheralInstance derived_from="LPC17_MCPWM" determined="infoFile" enable="SYSCTL.PCONP.PCMCPWM&amp;amp;0x1" id="MCPWM" location="0x400B8000"/&gt;&#13;
 &lt;peripheralInstance derived_from="LPC17_FMC" determined="infoFile" id="FMC" location="0x40084000"/&gt;&#13;
 &lt;/chip&gt;&#13;
-&lt;processor&gt;&#13;
-&lt;name gcc_name="cortex-m3"&gt;Cortex-M3&lt;/name&gt;&#13;
+&lt;processor&gt;&lt;name gcc_name="cortex-m3"&gt;Cortex-M3&lt;/name&gt;&#13;
 &lt;family&gt;Cortex-M&lt;/family&gt;&#13;
 &lt;/processor&gt;&#13;
 &lt;link href="nxp_lpcxxxx_peripheral.xme" show="embed" type="simple"/&gt;&#13;
@@ -273,4 +286,25 @@
 &lt;/TargetConfig&gt;</projectStorage>
 	</storageModule>
 	<storageModule moduleId="refreshScope"/>
+	<storageModule moduleId="scannerConfiguration">
+		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.lib.release.220544630;com.crt.advproject.config.lib.release.220544630.;com.crt.advproject.cpp.lib.release.868949362;com.crt.advproject.compiler.cpp.input.345894529">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.crt.advproject.GCCManagedMakePerProjectProfileCPP"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.lib.debug.1035705201;com.crt.advproject.config.lib.debug.1035705201.;com.crt.advproject.gas.lib.debug.889487204;com.crt.advproject.assembler.input.1858289130">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.crt.advproject.GCCManagedMakePerProjectProfile"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.lib.release.220544630;com.crt.advproject.config.lib.release.220544630.;com.crt.advproject.gcc.lib.release.546858367;com.crt.advproject.compiler.input.1565435398">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.crt.advproject.GCCManagedMakePerProjectProfile"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.lib.debug.1035705201;com.crt.advproject.config.lib.debug.1035705201.;com.crt.advproject.gcc.lib.debug.1432860699;com.crt.advproject.compiler.input.942340210">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.crt.advproject.GCCManagedMakePerProjectProfile"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.lib.debug.1035705201;com.crt.advproject.config.lib.debug.1035705201.;com.crt.advproject.cpp.lib.debug.1095437962;com.crt.advproject.compiler.cpp.input.419536631">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.crt.advproject.GCCManagedMakePerProjectProfileCPP"/>
+		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.lib.release.220544630;com.crt.advproject.config.lib.release.220544630.;com.crt.advproject.gas.lib.release.334572976;com.crt.advproject.assembler.input.212372839">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.crt.advproject.GCCManagedMakePerProjectProfile"/>
+		</scannerConfigBuildInfo>
+	</storageModule>
 </cproject>

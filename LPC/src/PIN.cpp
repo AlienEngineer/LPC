@@ -22,11 +22,13 @@ void PIN::Init(uint32_t port, uint32_t pin) {
 }
 
 void PIN::SetFunction(uint32_t func) {
-	// __IO uint32_t * base = ((&LPC_PINCON->PINSEL0) + (this->port * 2) + ((this->pin < 16 ? 0 : 1)));
-    // __IO uint32_t * base = PINSEL_BASE(this->port, this->pin);
-    
-	// PINSEL_Config((*base), this->pin, func);
-    PINSEL(this->port, this->pin, func);
+	SetFunction(this->port, this->pin, func);
+}
+
+void PIN::SetFunction(uint32_t port, uint32_t pin, uint32_t func) {
+	__IO uint32_t * base = PINSEL_BASE(port, pin);
+
+	PINSEL_Config((*base), pin, func);
 }
 
 void PIN::Set() {

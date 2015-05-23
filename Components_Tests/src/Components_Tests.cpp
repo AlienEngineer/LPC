@@ -16,12 +16,11 @@
 
 #include <LCD.h>
 #include <Thermometer.h>
-#include <Timer.h>
+#include <Timers.h>
+#include <Ethernet.h>
 
 #define RESET		2
 #define CS 			16
-
-
 
 int main(void) {
 	Thermometer thermo;
@@ -29,6 +28,7 @@ int main(void) {
 	PIN 		csPin	(0, CS);
 	PIN 		resetPin(0, RESET);
 	LCD 		lcd		(&csPin, &resetPin);
+	Ethernet    ethernet(&timer);
 
 	lcd.ClearScreen();
 
