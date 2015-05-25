@@ -52,6 +52,16 @@ void Timer::DelayMS(uint32_t millis) {
 	}
 }
 
+uint32_t Timer::GetTickCount(uint32_t timer) {
+	switch (timer) {
+	case SYSTICK:
+		return tick_count;
+		break;
+	}
+
+	return 0;
+}
+
 extern "C" {
 
 void SysTick_Handler(void) {
