@@ -27,10 +27,9 @@ typedef struct {
 } EthernetStatus;
 
 typedef struct {
-	uint8_t preamble[7];
     uint8_t dstAddr[ETH_ADDR_SIZE];
     uint8_t srcAddr[ETH_ADDR_SIZE];
-    uint8_t payload[ETH_FRAG_SIZE-(ETH_ADDR_SIZE*2+7)];
+    uint8_t payload[ETH_FRAG_SIZE-(ETH_ADDR_SIZE*2)];
 } EthernetFrame;
 
 typedef struct {

@@ -24,9 +24,9 @@
 								<option id="com.crt.advproject.gcc.arch.107973486" name="Architecture" superClass="com.crt.advproject.gcc.arch" value="com.crt.advproject.gcc.target.cm3" valueType="enumerated"/>
 								<option id="com.crt.advproject.gcc.thumb.31892163" name="Thumb mode" superClass="com.crt.advproject.gcc.thumb" value="true" valueType="boolean"/>
 								<option id="com.crt.advproject.gcc.hdrlib.1896676716" name="Library headers" superClass="com.crt.advproject.gcc.hdrlib" value="com.crt.advproject.gcc.hdrlib.newlib" valueType="enumerated"/>
-								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1890512380" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
-									<listOptionValue builtIn="false" value="__NEWLIB__"/>
+								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1890512380" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__CODE_RED"/>
+									<listOptionValue builtIn="false" value="__NEWLIB__"/>
 								</option>
 								<inputType id="com.crt.advproject.compiler.input.2129352523" superClass="com.crt.advproject.compiler.input"/>
 							</tool>
@@ -41,7 +41,7 @@
 									<listOptionValue builtIn="false" value="-Map=&quot;${BuildArtifactFileBaseName}.map&quot;"/>
 									<listOptionValue builtIn="false" value="--gc-sections"/>
 								</option>
-								<option id="com.crt.advproject.link.cpp.hdrlib.885106063" name="Library" superClass="com.crt.advproject.link.cpp.hdrlib" value="com.crt.advproject.cpp.link.hdrlib.newlib.nohost" valueType="enumerated"/>
+								<option id="com.crt.advproject.link.cpp.hdrlib.885106063" name="Library" superClass="com.crt.advproject.link.cpp.hdrlib" value="com.crt.advproject.cpp.link.hdrlib.newlib.semihost" valueType="enumerated"/>
 								<option id="gnu.cpp.link.option.libs.1163395737" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="CMSIS_CORE_LPC17xx"/>
 									<listOptionValue builtIn="false" value="LPC"/>
@@ -73,7 +73,7 @@
 									<listOptionValue builtIn="false" value="__LPC17XX__"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.other.other.1210968865" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" value="-c -fmessage-length=0 -fno-builtin -ffunction-sections -fdata-sections -fno-rtti -fno-exceptions" valueType="string"/>
-								<option id="com.crt.advproject.cpp.hdrlib.664323979" name="Library headers" superClass="com.crt.advproject.cpp.hdrlib" value="Newlib" valueType="enumerated"/>
+								<option id="com.crt.advproject.cpp.hdrlib.664323979" name="Library headers" superClass="com.crt.advproject.cpp.hdrlib" value="com.crt.advproject.cpp.hdrlib.newlib" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.include.paths.1015680048" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_CORE_LPC17xx/inc}&quot;"/>
@@ -323,10 +323,10 @@
 	</storageModule>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
-		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.exe.release.533961505;com.crt.advproject.config.exe.release.533961505.;com.crt.advproject.gas.exe.release.642277291;com.crt.advproject.assembler.input.1634163471">
+		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.exe.debug.745421762;com.crt.advproject.config.exe.debug.745421762.;com.crt.advproject.gcc.exe.debug.1307138588;com.crt.advproject.compiler.input.50943717">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.crt.advproject.GCCManagedMakePerProjectProfile"/>
 		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.exe.debug.745421762;com.crt.advproject.config.exe.debug.745421762.;com.crt.advproject.gcc.exe.debug.1307138588;com.crt.advproject.compiler.input.50943717">
+		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.exe.release.533961505;com.crt.advproject.config.exe.release.533961505.;com.crt.advproject.gas.exe.release.642277291;com.crt.advproject.assembler.input.1634163471">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.crt.advproject.GCCManagedMakePerProjectProfile"/>
 		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.exe.debug.745421762;com.crt.advproject.config.exe.debug.745421762.;com.crt.advproject.gas.exe.debug.2049184908;com.crt.advproject.assembler.input.52291103">
@@ -335,11 +335,14 @@
 		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.exe.release.533961505;com.crt.advproject.config.exe.release.533961505.;com.crt.advproject.gcc.exe.release.962912906;com.crt.advproject.compiler.input.238884123">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.crt.advproject.GCCManagedMakePerProjectProfile"/>
 		</scannerConfigBuildInfo>
+		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.exe.debug.745421762;com.crt.advproject.config.exe.debug.745421762.;com.crt.advproject.cpp.exe.debug.1291617094;com.crt.advproject.compiler.cpp.input.1500090085">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.crt.advproject.GCCManagedMakePerProjectProfileCPP"/>
+		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.exe.release.533961505;com.crt.advproject.config.exe.release.533961505.;com.crt.advproject.cpp.exe.release.331299700;com.crt.advproject.compiler.cpp.input.1300480169">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.crt.advproject.GCCManagedMakePerProjectProfileCPP"/>
 		</scannerConfigBuildInfo>
-		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.exe.debug.745421762;com.crt.advproject.config.exe.debug.745421762.;com.crt.advproject.cpp.exe.debug.1291617094;com.crt.advproject.compiler.cpp.input.1500090085">
-			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.crt.advproject.GCCManagedMakePerProjectProfileCPP"/>
+		<scannerConfigBuildInfo instanceId="com.crt.advproject.config.exe.debug.745421762;com.crt.advproject.config.exe.debug.745421762.;com.crt.advproject.gcc.exe.debug.288589652;com.crt.advproject.compiler.input.2129352523">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId="com.crt.advproject.GCCManagedMakePerProjectProfile"/>
 		</scannerConfigBuildInfo>
 	</storageModule>
 </cproject>

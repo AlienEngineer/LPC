@@ -34,7 +34,7 @@ u16_t tapdev_read() {
 }
 
 void tapdev_send() {
-	Ethernet::Send(uip_buf, UIP_BUFSIZE);
+	Ethernet::Send(uip_buf, uip_len);
 }
 
 #define BUF ((struct uip_eth_hdr *)&uip_buf[0])
@@ -58,9 +58,9 @@ int main(void) {
 		tapdev_init();
 		uip_init();
 
-		uip_ipaddr(ipaddr, 192, 168, 4, 20);
+		uip_ipaddr(ipaddr, 192, 168, 3, 20);
 		uip_sethostaddr(ipaddr);
-		uip_ipaddr(ipaddr, 192, 168, 4, 1);
+		uip_ipaddr(ipaddr, 192, 168, 3, 1);
 		uip_setdraddr(ipaddr);
 		uip_ipaddr(ipaddr, 255, 255, 255, 0);
 		uip_setnetmask(ipaddr);

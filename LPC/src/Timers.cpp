@@ -64,8 +64,8 @@ uint32_t Timer::GetTickCount(uint32_t timer) {
 
 extern "C" {
 
-void SysTick_Handler(void) {
-	tick_count++;
-}
+	void SysTick_Handler(void) {
+		tick_count++;
+	}
 
 }

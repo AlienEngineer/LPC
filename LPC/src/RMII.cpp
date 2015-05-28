@@ -61,6 +61,8 @@ void RMII::Reset()
 
 	// Wait for reset completes
 	while((this->Read(REGISTER0) & RESET) == TRUE) {	}
+
+	this->reseted = TRUE;
 }
 
 uint32_t RMII::GetId() 
