@@ -23,7 +23,7 @@
 #define EMAC_MAC1_RESET_MCS_RX		(1 << 11)
 #define EMAC_MAC1_SIMULATION_RESET	(1 << 14)
 #define EMAC_MAC1_SOFT_RESET		(1 << 15)
-#define EMAC_MAC1_RESETS			(EMAC_MAC1_RESET_TX | EMAC_MAC1_RESET_MCS_TX | EMAC_MAC1_RESET_RX | EMAC_MAC1_RESET_MCS_RX | EMAC_MAC1_SIMULATION_RESET | EMAC_MAC1_SOFT_RESET)
+#define EMAC_MAC1_RESETS			(EMAC_MAC1_RESET_TX | EMAC_MAC1_RESET_MCS_TX | EMAC_MAC1_RESET_RX | EMAC_MAC1_RESET_MCS_RX | EMAC_MAC1_SIMULATION_RESET)
 
 /* REGISTER MAC2 page 160 */
 #define EMAC_MAC2_FULL_DUPLEX		(1 << 0)
@@ -122,181 +122,77 @@ void Ethernet::Init() {
 	PIN::SetFunction(1, 16, PINSEL_ETHERNET);
 	PIN::SetFunction(1, 17, PINSEL_ETHERNET);
 
-	LPC_SC->PCONP |= 1 << 30;
+	// Set power setting to ethernet. Turn on Ethernet.
+	LPC_SC->PCONP |= PCOMP_ETHERNET;
 
-		LPC_EMAC->MAC1 = (1 << 8) | (1 << 9) | (1 << 10) | (1 << 11) | (1 << 14); // Set all resets!
-		timer.DelayMS(100);
-		LPC_EMAC->MAC1 = (1 << 0); // Set options, remove resets
+	LPC_EMAC->MAC1 = EMAC_MAC1_RESETS; // Set all resets!
+	timer.DelayMS(100);
+	LPC_EMAC->MAC1 = EMAC_MAC1_RECEIVE_ENABLE; // Set options, remove resets
 
-		LPC_EMAC->Command |= (1 << 3) | (1 << 4) | (1 << 5);
+	LPC_EMAC->Command |= EMAC_CMD_RESETS;
 
-		timer.DelayMS(100);
+	timer.DelayMS(100);
 
-		LPC_EMAC->MAC2 = (1 << 5) | (1 << 4);
-		LPC_EMAC->IPGR = 0x12;
+	LPC_EMAC->MAC2 = EMAC_MAC2_CRC_ENABLE | EMAC_MAC2_PAD_CRC_ENABLE;
+	LPC_EMAC->IPGR = 0x12;
 
-		LPC_EMAC->MCFG = (0xF << 2) | (1 << 15);
-		timer.DelayMS(100);
-		LPC_EMAC->MCFG = (0xF << 2);
+	LPC_EMAC->MCFG = EMAC_MCFG_SPEED_DIVIDER | EMAC_MCFG_MII_RESET;
+	timer.DelayMS(100);
+	LPC_EMAC->MCFG = EMAC_MCFG_SPEED_DIVIDER;
 
-		LPC_EMAC->Command = (1 << 9) | (0 << 7) | (1 << 6);
-		timer.DelayMS(100);
+	LPC_EMAC->Command = EMAC_CMD_PASS_RX_FILTER | EMAC_CMD_TX_FLOW_CONTROL | EMAC_CMD_PASS_RUNT_FRAME | EMAC_CMD_RMII;
+	timer.DelayMS(100);
 
-		rmii.Write(1 << 15, 0);
+	// Reset RMII
+	rmii.Reset();
+	timer.DelayMS(100);
 
-		// Wait for reset completes
-		while ((rmii.Read(0) & (1 << 15)) == 1) {
-		}
-		timer.DelayMS(100);
+	printf("RMII id %d\n", rmii.GetId());
 
-		uint32_t id = rmii.Read(2);
+	uint32_t flags = rmii.Autonegotiate();
 
-		printf("LAN8720 id: %d\n", id);
+	if (flags & RMII_FULLDUPLEX) {
+		LPC_EMAC->MAC2 |= EMAC_FULLDUPLEX; // Full duplex
+		LPC_EMAC->Command |= CMD_FULLDUPLEX;
+		LPC_EMAC->IPGT = EMAC_IPGT_FULLDUPLEX;
+	}
 
-		// START AUTO NEGOTIATION
-		rmii.Write(1 << 12, 0);
+	if (flags & RMII_SPEED100) {
+		LPC_EMAC->SUPP = (1 << 8);
+	}
 
-		uint32_t res = rmii.Read(1);
+	// RECEIVE
+	LPC_EMAC->RxConsumeIndex = 0;
+	LPC_EMAC->RxDescriptor = RX_DESC_BASE;
+	LPC_EMAC->RxDescriptorNumber = NUM_RX_FRAG - 1;
+	LPC_EMAC->RxStatus = RX_STAT_BASE;
 
-		while ((res & (1 << 5)) == 0) {
-			res = rmii.Read(1);
-		}
+	// SEND
+	LPC_EMAC->TxProduceIndex = 0;
+	LPC_EMAC->TxDescriptor = TX_DESC_BASE;
+	LPC_EMAC->TxDescriptorNumber = NUM_TX_FRAG - 1;
+	LPC_EMAC->TxStatus = TX_STAT_BASE;
 
-		uint32_t flags = 0x0;
+	for (uint32_t i = 0; i < NUM_RX_FRAG; ++i) {
+		((EthernetDescriptor*) LPC_EMAC->RxDescriptor)[i].frame = &((EthernetFrame *) (RX_BUF_BASE))[i];
+		((EthernetDescriptor*) LPC_EMAC->RxDescriptor)[i].control = ((1<<31) | (ETH_FRAG_SIZE-1));
+	}
 
-		// 1 - 100Mb
-		// 0 - 10Mb
-		if ((res & 1 << 10) | (res & 1 << 12)) {
-			flags |= 1 << 13;
-		}
+	for (uint32_t i = 0; i < NUM_TX_FRAG; ++i) {
+		((EthernetDescriptor*) LPC_EMAC->TxDescriptor)[i].frame = &((EthernetFrame *) (TX_BUF_BASE))[i];
+		((EthernetDescriptor*) LPC_EMAC->TxDescriptor)[i].control = ETH_FRAG_SIZE;
+	}
 
-		// 1 - FullDuplex
-		// 0 - HalfDuplex
-		if ((res & 1 << 13) | (res & 1 << 11)) {
-			flags |= 1 << 8;
-			LPC_EMAC->MAC2 |= (1 << 0); // Full duplex
-			LPC_EMAC->Command |= (1 << 10);
-		}
+	LPC_EMAC->RxFilterCtrl = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) | (1 << 5);
+	LPC_EMAC->SA0 = 0x1234;
+	LPC_EMAC->SA1 = 0x1;
+	LPC_EMAC->SA2 = 0x2;
 
-		if (res & 1 << 13) {
-			LPC_EMAC->SUPP = (1 << 8);
-		}
+	// Enable EMAC
+	LPC_EMAC->Command |= EMAC_CMD_RX_ENABLE | EMAC_CMD_TX_ENABLE;
+	LPC_EMAC->MAC1 |= EMAC_MAC1_RECEIVE_ENABLE;
 
-		// STOP AND SET SPEED
-		rmii.Write(flags, 0);
-
-		timer.DelayMS(100);
-
-		// RECEIVE
-		LPC_EMAC->RxConsumeIndex = 0;
-		LPC_EMAC->RxDescriptor = RX_DESC_BASE;
-		LPC_EMAC->RxDescriptorNumber = NUM_RX_FRAG - 1;
-		LPC_EMAC->RxStatus = RX_STAT_BASE;
-
-		for (i = 0; i < NUM_RX_FRAG; ++i) {
-			((EthernetDescriptor*) LPC_EMAC->RxDescriptor)[i].frame = &((EthernetFrame *) (RX_BUF_BASE))[i];
-			((EthernetDescriptor*) LPC_EMAC->RxDescriptor)[i].control = ((1<<31) | (ETH_FRAG_SIZE-1));
-		}
-
-		// SEND
-		LPC_EMAC->TxProduceIndex = 0;
-		LPC_EMAC->TxDescriptor = TX_DESC_BASE;
-		LPC_EMAC->TxDescriptorNumber = NUM_TX_FRAG - 1;
-		LPC_EMAC->TxStatus = TX_STAT_BASE;
-
-		for (i = 0; i < NUM_TX_FRAG; ++i) {
-			((EthernetDescriptor*) LPC_EMAC->TxDescriptor)[i].frame = &((EthernetFrame *) (TX_BUF_BASE))[i];
-			((EthernetDescriptor*) LPC_EMAC->TxDescriptor)[i].control = ETH_FRAG_SIZE-1;
-		}
-
-		LPC_EMAC->RxFilterCtrl = (1<<1) | (1 << 5);
-
-		LPC_EMAC->SA0 = 0x1234;
-		LPC_EMAC->SA1 = 0x6789;
-		LPC_EMAC->SA2 = 0xABCD;
-
-		LPC_EMAC->IntEnable = (1<<3) | (1 << 7);
-
-		/* Reset all interrupts */
-		LPC_EMAC->IntClear  = 0xFFFF;
-
-		// TIMER_Delay(15000);
-		LPC_EMAC->Command |= (1 << 0) | (1 << 1);
-		LPC_EMAC->MAC1 |= 1;
-
-		timer.DelayMS(100);
-
-//	// Set power setting to ethernet. Turn on Ethernet.
-//	LPC_SC->PCONP |= PCOMP_ETHERNET;
-//
-//	LPC_EMAC->MAC1 = EMAC_MAC1_RESETS; // Set all resets!
-//	timer.DelayMS(100);
-//	LPC_EMAC->MAC1 = EMAC_MAC1_RECEIVE_ENABLE; // Set options, remove resets
-//
-//	LPC_EMAC->Command |= EMAC_CMD_RESETS;
-//
-//	timer.DelayMS(100);
-//
-//	LPC_EMAC->MAC2 = EMAC_MAC2_CRC_ENABLE | EMAC_MAC2_PAD_CRC_ENABLE;
-//	LPC_EMAC->IPGR = 0x12;
-//
-//	LPC_EMAC->MCFG = EMAC_MCFG_SPEED_DIVIDER | EMAC_MCFG_MII_RESET;
-//	timer.DelayMS(100);
-//	LPC_EMAC->MCFG = EMAC_MCFG_SPEED_DIVIDER;
-//
-//	LPC_EMAC->Command = EMAC_CMD_PASS_RX_FILTER | EMAC_CMD_TX_FLOW_CONTROL | EMAC_CMD_PASS_RUNT_FRAME;
-//	timer.DelayMS(100);
-//
-//	// Reset RMII
-//	rmii.Reset();
-//	timer.DelayMS(100);
-//
-//	printf("RMII id %d\n", rmii.GetId());
-//
-//	uint32_t flags = rmii.Autonegotiate();
-//
-//	if (flags & RMII_FULLDUPLEX) {
-//		LPC_EMAC->MAC2 |= EMAC_FULLDUPLEX; // Full duplex
-//		LPC_EMAC->Command |= CMD_FULLDUPLEX;
-//		// LPC_EMAC->IPGT = EMAC_IPGT_FULLDUPLEX;
-//	}
-//
-//	if (flags & RMII_SPEED100) {
-//		LPC_EMAC->SUPP = (1 << 8);
-//	}
-//
-//	// RECEIVE
-//	LPC_EMAC->RxConsumeIndex = 0;
-//	LPC_EMAC->RxDescriptor = RX_DESC_BASE;
-//	LPC_EMAC->RxDescriptorNumber = NUM_RX_FRAG - 1;
-//	LPC_EMAC->RxStatus = RX_STAT_BASE;
-//
-//	// SEND
-//	LPC_EMAC->TxProduceIndex = 0;
-//	LPC_EMAC->TxDescriptor = TX_DESC_BASE;
-//	LPC_EMAC->TxDescriptorNumber = NUM_TX_FRAG - 1;
-//	LPC_EMAC->TxStatus = TX_STAT_BASE;
-//
-//	for (uint32_t i = 0; i < NUM_RX_FRAG; ++i) {
-//		((EthernetDescriptor*) LPC_EMAC->RxDescriptor)[i].frame = &((EthernetFrame *) (RX_BUF_BASE))[i];
-//		((EthernetDescriptor*) LPC_EMAC->RxDescriptor)[i].control = ETH_FRAG_SIZE;
-//	}
-//
-//	for (uint32_t i = 0; i < NUM_TX_FRAG; ++i) {
-//		((EthernetDescriptor*) LPC_EMAC->TxDescriptor)[i].frame = &((EthernetFrame *) (TX_BUF_BASE))[i];
-//		((EthernetDescriptor*) LPC_EMAC->TxDescriptor)[i].control = ETH_FRAG_SIZE;
-//	}
-//
-//	LPC_EMAC->RxFilterCtrl = (1 << 0) | (1 << 1) | (1 << 2) | (1 << 3) | (1 << 4) | (1 << 5);
-//	LPC_EMAC->SA0 = 0x1234;
-//	LPC_EMAC->SA1 = 0x1;
-//	LPC_EMAC->SA2 = 0x2;
-//
-//	// Enable EMAC
-//	LPC_EMAC->Command |= EMAC_CMD_RX_ENABLE | EMAC_CMD_TX_ENABLE;
-//	LPC_EMAC->MAC1 |= EMAC_MAC1_RECEIVE_ENABLE;
-//
-//	timer.DelayMS(100);
+	timer.DelayMS(100);
 
 	initialized = true;
 }
@@ -306,12 +202,13 @@ uint32_t Ethernet::Send(void * data, uint32_t size) {
 		return FULL ;
 	}
 
-	printf("sending %d\n", size);
+	//printf("sending %d index: %d\n", size, LPC_EMAC->TxProduceIndex);
+
 
 	EthernetDescriptor * descriptor = &((EthernetDescriptor *) LPC_EMAC->TxDescriptor)[LPC_EMAC->TxProduceIndex];
 
 	// Copy data to the TxBuffer to send.
-	memcpy(data, (void*) &descriptor[LPC_EMAC->TxProduceIndex].frame, size);
+	memcpy(&(descriptor->frame->dstAddr[0]), data, size);
 
 	descriptor->control = ((1<<28) | (1<<29) |(1<<30) | (1<<26) | (size-1) & 0x7ff);
 
@@ -341,7 +238,7 @@ uint32_t Ethernet::Receive(void * buffer, uint32_t bufferSize) {
 			LPC_EMAC->RxConsumeIndex = 0;
 		}
 
-		printf("received %d bytes\n", status->info & 0x7FF);
+		//printf("received %d bytes\n", status->info & 0x7FF);
 
 		// Return the received size, first 10 bits.
 		return status->info & 0x7FF;
