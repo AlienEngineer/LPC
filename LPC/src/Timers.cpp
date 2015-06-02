@@ -7,8 +7,7 @@
 
 #include <Timers.h>
 
-#define TIMER_MILLIS	(SystemCoreClock/1000)
-#define TIMER_INTERVAL	(10)
+
 
 __IO uint32_t systick_init = 0;
 __IO uint32_t tick_count;

@@ -10,6 +10,8 @@
 
 #include <common.h>
 
+#define TIMER_MILLIS	(SystemCoreClock/1000)
+#define TIMER_INTERVAL	(10)
 #define SYSTICK		0
 
 

@@ -107,7 +107,6 @@ void Ethernet::Init() {
 		return;
 	}
 
-	uint32_t i = 0;
 	RMII rmii;
 	Timer timer;
 
@@ -147,7 +146,7 @@ void Ethernet::Init() {
 	rmii.Reset();
 	timer.DelayMS(100);
 
-	printf("RMII id %d\n", rmii.GetId());
+	// printf("RMII id %d\n", rmii.GetId());
 
 	uint32_t flags = rmii.Autonegotiate();
 
@@ -188,6 +187,10 @@ void Ethernet::Init() {
 	LPC_EMAC->SA1 = 0x1;
 	LPC_EMAC->SA2 = 0x2;
 
+	LPC_EMAC->IntEnable = (1<<3) | (1 << 7);
+	/* Reset all interrupts */
+	LPC_EMAC->IntClear  = 0xFFFF;
+
 	// Enable EMAC
 	LPC_EMAC->Command |= EMAC_CMD_RX_ENABLE | EMAC_CMD_TX_ENABLE;
 	LPC_EMAC->MAC1 |= EMAC_MAC1_RECEIVE_ENABLE;
@@ -198,27 +201,30 @@ void Ethernet::Init() {
 }
 
 uint32_t Ethernet::Send(void * data, uint32_t size) {
-	if (LPC_EMAC->TxProduceIndex == LPC_EMAC->TxConsumeIndex - 1) {
-		return FULL ;
+
+	uint32_t index = LPC_EMAC->TxProduceIndex;
+	uint32_t indexNext = index+1;
+
+	if (indexNext > LPC_EMAC->TxDescriptorNumber) {
+		indexNext = 0;
+	}
+
+	if (indexNext == LPC_EMAC->TxConsumeIndex) {
+		return FULL;
 	}
 
 	//printf("sending %d index: %d\n", size, LPC_EMAC->TxProduceIndex);
 
 
-	EthernetDescriptor * descriptor = &((EthernetDescriptor *) LPC_EMAC->TxDescriptor)[LPC_EMAC->TxProduceIndex];
+	EthernetDescriptor * descriptor = &((EthernetDescriptor *) LPC_EMAC->TxDescriptor)[index];
 
 	// Copy data to the TxBuffer to send.
 	memcpy(&(descriptor->frame->dstAddr[0]), data, size);
 
-	descriptor->control = ((1<<28) | (1<<29) |(1<<30) | (1<<26) | (size-1) & 0x7ff);
+	descriptor->control = ((1<<28) | (1<<29) |(1<<30)|(1<<31) | (1<<26) | (size-1) & 0x7ff);
 
 	// Tell hardware to dispatch data
-	++LPC_EMAC->TxProduceIndex;
-
-	// Reset produce index to zero.
-	if (LPC_EMAC->TxProduceIndex == NUM_TX_FRAG) {
-		LPC_EMAC->TxProduceIndex = 0;
-	}
+	LPC_EMAC->TxProduceIndex = indexNext;
 
 	return size;
 }

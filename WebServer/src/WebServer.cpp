@@ -129,65 +129,47 @@ int main(void) {
 
 
 /*---------------------------------------------------------------------------*/
-void
-uip_log(char *m)
-{
-  printf("uIP log message: %s\n", m);
+void uip_log(char *m) {
+	// printf("uIP log message: %s\n", m);
 }
-void
-resolv_found(char *name, u16_t *ipaddr)
-{
-  //u16_t *ipaddr2;
-
-  if(ipaddr == NULL) {
-    printf("Host '%s' not found.\n", name);
-  } else {
-    printf("Found name '%s' = %d.%d.%d.%d\n", name,
-	   htons(ipaddr[0]) >> 8,
-	   htons(ipaddr[0]) & 0xff,
-	   htons(ipaddr[1]) >> 8,
-	   htons(ipaddr[1]) & 0xff);
-    /*    webclient_get("www.sics.se", 80, "/~adam/uip");*/
-  }
-}
-#ifdef __DHCPC_H__
-void
-dhcpc_configured(const struct dhcpc_state *s)
-{
-  uip_sethostaddr(s->ipaddr);
-  uip_setnetmask(s->netmask);
-  uip_setdraddr(s->default_router);
-  resolv_conf(s->dnsaddr);
-}
-#endif /* __DHCPC_H__ */
-void
-smtp_done(unsigned char code)
-{
-  printf("SMTP done with code %d\n", code);
-}
-void
-webclient_closed(void)
-{
-  printf("Webclient: connection closed\n");
-}
-void
-webclient_aborted(void)
-{
-  printf("Webclient: connection aborted\n");
-}
-void
-webclient_timedout(void)
-{
-  printf("Webclient: connection timed out\n");
-}
-void
-webclient_connected(void)
-{
-  printf("Webclient: connected, waiting for data...\n");
-}
-void
-webclient_datahandler(char *data, u16_t len)
-{
-  printf("Webclient: got %d bytes of data.\n", len);
-}
+//void resolv_found(char *name, u16_t *ipaddr) {
+//	//u16_t *ipaddr2;
+//
+//	if (ipaddr == NULL) {
+//		printf("Host '%s' not found.\n", name);
+//	} else {
+//		printf("Found name '%s' = %d.%d.%d.%d\n", name, htons(ipaddr[0]) >> 8,
+//				htons(ipaddr[0]) & 0xff, htons(ipaddr[1]) >> 8,
+//				htons(ipaddr[1]) & 0xff);
+//		/*    webclient_get("www.sics.se", 80, "/~adam/uip");*/
+//	}
+//}
+//#ifdef __DHCPC_H__
+//void
+//dhcpc_configured(const struct dhcpc_state *s)
+//{
+//	uip_sethostaddr(s->ipaddr);
+//	uip_setnetmask(s->netmask);
+//	uip_setdraddr(s->default_router);
+//	resolv_conf(s->dnsaddr);
+//}
+//#endif /* __DHCPC_H__ */
+//void smtp_done(unsigned char code) {
+//	printf("SMTP done with code %d\n", code);
+//}
+//void webclient_closed(void) {
+//	printf("Webclient: connection closed\n");
+//}
+//void webclient_aborted(void) {
+//	printf("Webclient: connection aborted\n");
+//}
+//void webclient_timedout(void) {
+//	printf("Webclient: connection timed out\n");
+//}
+//void webclient_connected(void) {
+//	printf("Webclient: connected, waiting for data...\n");
+//}
+//void webclient_datahandler(char *data, u16_t len) {
+//	printf("Webclient: got %d bytes of data.\n", len);
+//}
 /*---------------------------------------------------------------------------*/

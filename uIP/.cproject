@@ -43,6 +43,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_CORE_LPC17xx/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/uIP/src/webserver}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LPC/inc}&quot;"/>
 								</option>
 								<option id="com.crt.advproject.gcc.hdrlib.1886101724" name="Library headers" superClass="com.crt.advproject.gcc.hdrlib" value="Redlib" valueType="enumerated"/>
 								<inputType id="com.crt.advproject.compiler.input.416980211" superClass="com.crt.advproject.compiler.input"/>
@@ -54,6 +55,7 @@
 								<option id="gnu.both.asm.option.include.paths.97068644" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/uIP/src/webserver}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LPC/inc}&quot;"/>
 								</option>
 								<option id="com.crt.advproject.gas.hdrlib.592884978" name="Library headers" superClass="com.crt.advproject.gas.hdrlib" value="Redlib" valueType="enumerated"/>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.1332120523" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
@@ -112,6 +114,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_CORE_LPC17xx/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/uIP/src/webserver}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LPC/inc}&quot;"/>
 								</option>
 								<option id="com.crt.advproject.gcc.hdrlib.1489257397" name="Library headers" superClass="com.crt.advproject.gcc.hdrlib" value="Redlib" valueType="enumerated"/>
 								<inputType id="com.crt.advproject.compiler.input.1641356234" superClass="com.crt.advproject.compiler.input"/>
@@ -123,6 +126,7 @@
 								<option id="gnu.both.asm.option.include.paths.947424130" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/uIP/src/webserver}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LPC/inc}&quot;"/>
 								</option>
 								<option id="com.crt.advproject.gas.hdrlib.915174611" name="Library headers" superClass="com.crt.advproject.gas.hdrlib" value="Redlib" valueType="enumerated"/>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.553637056" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
