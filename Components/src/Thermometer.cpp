@@ -23,11 +23,10 @@
 #define FREQUENCY 					(uint32_t)200000
 
 #define ERROR						((int8_t)(125))
+char buffer[2];
 
 Thermometer::Thermometer() {
 	this->i2c.Init(LPC_I2C1, FREQUENCY);
-
-	char buffer[2];
 
 	buffer[0] = DS1631CMD_ACESS_CONF;
 	buffer[1] = 0x0C;
@@ -35,9 +34,9 @@ Thermometer::Thermometer() {
 	i2c.Transfer(DS1631_ADDR, WRITE, buffer, 2);
 }
 
+
 int8_t Thermometer::GetTemperature() {
 	uint32_t status;
-	char buffer[2];
 
 	/* Inicia processo de conversÃ£o no sensor de temperatura. */
 	buffer[0] = DS1631CMD_START_CONV;

@@ -57,8 +57,31 @@
 HTTPD_CGI_CALL(file, "file-stats", file_stats);
 HTTPD_CGI_CALL(tcp, "tcp-connections", tcp_stats);
 HTTPD_CGI_CALL(net, "net-stats", net_stats);
+HTTPD_CGI_CALL(logs, "room-temp", room_temp);
 
-static const struct httpd_cgi_call *calls[] = { &file, &tcp, &net, NULL };
+static const struct httpd_cgi_call *calls[] = { &file, &tcp, &net, &logs, NULL };
+
+typedef struct {
+	int8_t temperature;
+} APP_DATA;
+
+/*---------------------------------------------------------------------------*/
+static unsigned short
+generate_room_temp(void *arg)
+{
+  return snprintf((char *)uip_appdata, UIP_APPDATA_SIZE, "%d", ((APP_DATA*)uip_customdata)->temperature);
+}
+/*---------------------------------------------------------------------------*/
+static
+PT_THREAD(room_temp(struct httpd_state *s, char *ptr))
+{
+
+  PSOCK_BEGIN(&s->sout);
+
+  PSOCK_GENERATOR_SEND(&s->sout, generate_room_temp, s);
+
+  PSOCK_END(&s->sout);
+}
 
 /*---------------------------------------------------------------------------*/
 static

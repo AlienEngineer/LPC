@@ -1,12 +1,12 @@
 /*
-===============================================================================
+ ===============================================================================
  Name        : main.c
  Author      : $(author)
  Version     :
  Copyright   : $(copyright)
  Description : main definition
-===============================================================================
-*/
+ ===============================================================================
+ */
 
 #ifdef __USE_CMSIS
 #include "LPC17xx.h"
@@ -15,22 +15,24 @@
 #include <cr_section_macros.h>
 
 extern "C" {
-	#include <uip.h>
-	#include <uip_arp.h>
-	#include <timer.h>
-	#include "clock-arch.h"
+#include <uip.h>
+#include <uip_arp.h>
+#include <timer.h>
+#include "clock-arch.h"
 }
 
+#include <string.h>
 #include <stdio.h>
 #include <Ethernet.h>
 #include <timers.h>
+#include <Thermometer.h>
 
 void tapdev_init() {
 	Ethernet::Init();
 }
 
 u16_t tapdev_read() {
-	return Ethernet::Receive(uip_buf, ETH_FRAG_SIZE);
+	return Ethernet::Receive(uip_buf, UIP_BUFSIZE);
 }
 
 void tapdev_send() {
@@ -39,94 +41,108 @@ void tapdev_send() {
 
 #define BUF ((struct uip_eth_hdr *)&uip_buf[0])
 
-extern "C" clock_time_t clock_time(void)
-{
-	return (clock_time_t)Timer::GetTickCount(SYSTICK);
+extern "C" clock_time_t clock_time(void) {
+	return (clock_time_t) Timer::GetTickCount(SYSTICK);
 }
 
-
+typedef struct {
+	int8_t temperature;
+} APP_DATA;
 
 int main(void) {
+	APP_DATA data;
+	Thermometer thermo;
+	uint32_t count = 15;
+	uint32_t lastTickCount = Timer::GetTickCount(SYSTICK);
+
+	int8_t temp = thermo.GetTemperature();
 
 	int i;
-		uip_ipaddr_t ipaddr;
-		struct timer periodic_timer, arp_timer;
+	uip_ipaddr_t ipaddr;
+	struct timer periodic_timer, arp_timer;
 
-		timer_set(&periodic_timer, CLOCK_SECOND / 2);
-		timer_set(&arp_timer, CLOCK_SECOND * 10);
+	timer_set(&periodic_timer, CLOCK_SECOND / 2);
+	timer_set(&arp_timer, CLOCK_SECOND * 10);
 
-		tapdev_init();
-		uip_init();
+	tapdev_init();
+	uip_init();
+	uip_initdata((void *)&data);
 
-		uip_ipaddr(ipaddr, 192, 168, 3, 20);
-		uip_sethostaddr(ipaddr);
-		uip_ipaddr(ipaddr, 192, 168, 3, 1);
-		uip_setdraddr(ipaddr);
-		uip_ipaddr(ipaddr, 255, 255, 255, 0);
-		uip_setnetmask(ipaddr);
+	uip_ipaddr(ipaddr, 192, 168, 3, 20);
+	uip_sethostaddr(ipaddr);
+	uip_ipaddr(ipaddr, 192, 168, 3, 1);
+	uip_setdraddr(ipaddr);
+	uip_ipaddr(ipaddr, 255, 255, 255, 0);
+	uip_setnetmask(ipaddr);
 
-		httpd_init();
+	httpd_init();
 
-		while (1) {
-			uip_len = tapdev_read();
-			if (uip_len > 0) {
-				if (BUF->type == htons(UIP_ETHTYPE_IP)) {
-					uip_arp_ipin();
-					uip_input();
-					/* If the above function invocation resulted in data that
-					 should be sent out on the network, the global variable
-					 uip_len is set to a value > 0. */
-					if (uip_len > 0) {
-						uip_arp_out();
-						tapdev_send();
-					}
-				} else if (BUF->type == htons(UIP_ETHTYPE_ARP)) {
-					uip_arp_arpin();
-					/* If the above function invocation resulted in data that
-					 should be sent out on the network, the global variable
-					 uip_len is set to a value > 0. */
-					if (uip_len > 0) {
-						tapdev_send();
-					}
+	while (1) {
+
+		if ((Timer::GetTickCount(SYSTICK) - lastTickCount) > (250 / TIMER_INTERVAL)) {
+			//
+			// Send temperature whenever requested!
+			data.temperature = thermo.GetTemperature();
+
+			lastTickCount = Timer::GetTickCount(SYSTICK);
+		}
+		uip_len = tapdev_read();
+		if (uip_len > 0) {
+			if (BUF->type == htons(UIP_ETHTYPE_IP)) {
+				uip_arp_ipin();
+				uip_input();
+				/* If the above function invocation resulted in data that
+				 should be sent out on the network, the global variable
+				 uip_len is set to a value > 0. */
+				if (uip_len > 0) {
+					uip_arp_out();
+					tapdev_send();
 				}
-
-			} else if (timer_expired(&periodic_timer)) {
-				timer_reset(&periodic_timer);
-				for (i = 0; i < UIP_CONNS; i++) {
-					uip_periodic(i);
-					/* If the above function invocation resulted in data that
-					 should be sent out on the network, the global variable
-					 uip_len is set to a value > 0. */
-					if (uip_len > 0) {
-						uip_arp_out();
-						tapdev_send();
-					}
-				}
-
-	#if UIP_UDP
-				for(i = 0; i < UIP_UDP_CONNS; i++) {
-					uip_udp_periodic(i);
-					/* If the above function invocation resulted in data that
-					 should be sent out on the network, the global variable
-					 uip_len is set to a value > 0. */
-					if(uip_len > 0) {
-						uip_arp_out();
-						tapdev_send();
-					}
-				}
-	#endif /* UIP_UDP */
-
-				/* Call the ARP timer function every 10 seconds. */
-				if (timer_expired(&arp_timer)) {
-					timer_reset(&arp_timer);
-					uip_arp_timer();
+			} else if (BUF->type == htons(UIP_ETHTYPE_ARP)) {
+				uip_arp_arpin();
+				/* If the above function invocation resulted in data that
+				 should be sent out on the network, the global variable
+				 uip_len is set to a value > 0. */
+				if (uip_len > 0) {
+					tapdev_send();
 				}
 			}
+
+		} else if (timer_expired(&periodic_timer)) {
+			timer_reset(&periodic_timer);
+			for (i = 0; i < UIP_CONNS; i++) {
+				uip_periodic(i);
+				/* If the above function invocation resulted in data that
+				 should be sent out on the network, the global variable
+				 uip_len is set to a value > 0. */
+				if (uip_len > 0) {
+					uip_arp_out();
+					tapdev_send();
+				}
+			}
+
+#if UIP_UDP
+			for(i = 0; i < UIP_UDP_CONNS; i++) {
+				uip_udp_periodic(i);
+				/* If the above function invocation resulted in data that
+				 should be sent out on the network, the global variable
+				 uip_len is set to a value > 0. */
+				if(uip_len > 0) {
+					uip_arp_out();
+					tapdev_send();
+				}
+			}
+#endif /* UIP_UDP */
+
+			/* Call the ARP timer function every 10 seconds. */
+			if (timer_expired(&arp_timer)) {
+				timer_reset(&arp_timer);
+				uip_arp_timer();
+			}
 		}
-		return 0;
+	}
+	return 0;
 }
-
-
 
 /*---------------------------------------------------------------------------*/
 void uip_log(char *m) {

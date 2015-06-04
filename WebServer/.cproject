@@ -28,6 +28,10 @@
 									<listOptionValue builtIn="false" value="__CODE_RED"/>
 									<listOptionValue builtIn="false" value="__NEWLIB__"/>
 								</option>
+								<option id="gnu.c.compiler.option.include.paths.748402956" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LPC/inc}&quot;"/>
+								</option>
 								<inputType id="com.crt.advproject.compiler.input.2129352523" superClass="com.crt.advproject.compiler.input"/>
 							</tool>
 							<tool id="com.crt.advproject.link.cpp.exe.debug.1625320884" name="MCU C++ Linker" superClass="com.crt.advproject.link.cpp.exe.debug">
@@ -44,6 +48,7 @@
 								<option id="com.crt.advproject.link.cpp.hdrlib.885106063" name="Library" superClass="com.crt.advproject.link.cpp.hdrlib" value="com.crt.advproject.cpp.link.hdrlib.newlib.semihost" valueType="enumerated"/>
 								<option id="gnu.cpp.link.option.libs.1163395737" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="CMSIS_CORE_LPC17xx"/>
+									<listOptionValue builtIn="false" value="Components"/>
 									<listOptionValue builtIn="false" value="LPC"/>
 									<listOptionValue builtIn="false" value="uIP"/>
 								</option>
@@ -51,6 +56,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_CORE_LPC17xx/Debug}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LPC/Debug}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/uIP/Debug}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/Debug}&quot;"/>
 								</option>
 								<option id="com.crt.advproject.link.cpp.crpenable.88125133" name="Enable Code Read Protect" superClass="com.crt.advproject.link.cpp.crpenable" value="true" valueType="boolean"/>
 								<option id="com.crt.advproject.link.cpp.multicore.slave.9621713" name="Multicore configuration" superClass="com.crt.advproject.link.cpp.multicore.slave"/>
@@ -77,6 +83,7 @@
 								<option id="gnu.cpp.compiler.option.include.paths.1015680048" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_CORE_LPC17xx/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LPC/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/uIP/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/uIP/src/webserver}&quot;"/>
@@ -91,6 +98,7 @@
 								<option id="gnu.both.asm.option.include.paths.1691080435" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_CORE_LPC17xx/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LPC/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/uIP/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/uIP/src/webserver}&quot;"/>
@@ -101,7 +109,6 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="inc"/>
 						<entry excluding="webserver/httpd-fsdata.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
@@ -150,6 +157,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/WebServer/src/webserver}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/uIP/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/uIP/src/webserver}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/inc}&quot;"/>
 								</option>
 								<inputType id="com.crt.advproject.compiler.cpp.input.1300480169" superClass="com.crt.advproject.compiler.cpp.input"/>
 							</tool>
@@ -175,6 +183,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/WebServer/src/webserver}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/uIP/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/uIP/src/webserver}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/inc}&quot;"/>
 								</option>
 								<inputType id="com.crt.advproject.compiler.input.238884123" superClass="com.crt.advproject.compiler.input"/>
 							</tool>
@@ -191,6 +200,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/WebServer/src/webserver}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/uIP/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/uIP/src/webserver}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/inc}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.482567493" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 								<inputType id="com.crt.advproject.assembler.input.1634163471" name="Additional Assembly Source Files" superClass="com.crt.advproject.assembler.input"/>
@@ -211,11 +221,13 @@
 									<listOptionValue builtIn="false" value="CMSIS_CORE_LPC17xx"/>
 									<listOptionValue builtIn="false" value="LPC"/>
 									<listOptionValue builtIn="false" value="uIP"/>
+									<listOptionValue builtIn="false" value="Components"/>
 								</option>
 								<option id="gnu.cpp.link.option.paths.1947892832" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_CORE_LPC17xx/Release}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LPC/Release}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/uIP/Release}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/Release}&quot;"/>
 								</option>
 								<option id="com.crt.advproject.link.cpp.crpenable.1099906971" name="Enable Code Read Protect" superClass="com.crt.advproject.link.cpp.crpenable" value="true" valueType="boolean"/>
 								<inputType id="cdt.managedbuild.tool.gnu.cpp.linker.input.514683407" superClass="cdt.managedbuild.tool.gnu.cpp.linker.input">
@@ -227,7 +239,6 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="inc"/>
 						<entry excluding="webserver/httpd-fsdata.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>

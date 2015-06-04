@@ -187,6 +187,10 @@ typedef uip_ip4addr_t uip_ipaddr_t;
  */
 void uip_init(void);
 
+ /**
+  * Link some data to be used by cgi
+  */
+void uip_initdata(void * data);
 /**
  * uIP initialization function.
  *
@@ -420,7 +424,7 @@ void uip_setipid(u16_t id);
  \endcode
  */
 extern u8_t uip_buf[UIP_BUFSIZE+2];
-
+extern void * uip_customdata;
 /** @} */
 
 /*---------------------------------------------------------------------------*/
@@ -1097,6 +1101,7 @@ u16_t htons(u16_t val);
  * use this space to write the data into before calling uip_send().
  */
 extern void *uip_appdata;
+
 
 #if UIP_URGDATA > 0
 /* u8_t *uip_urgdata:
