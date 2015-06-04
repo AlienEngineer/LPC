@@ -8,7 +8,7 @@ opendir(DIR, ".");
 @files =  grep { !/^\./ && !/(CVS|~)/ } readdir(DIR);
 closedir(DIR);
 
-foreach $file (@files) {  
+foreach $file (@files) {   
    
     if(-d $file && $file !~ /^\./) {
 	print "Processing directory $file\n";
@@ -46,7 +46,9 @@ foreach $file (@files) {
 	    if($i == 0) {
 		print(OUTPUT "\t");
 	    }
+	    
 	    printf(OUTPUT "%#02x, ", unpack("C", $data));
+
 	    $i++;
 	    if($i == 10) {
 		print(OUTPUT "\n");
