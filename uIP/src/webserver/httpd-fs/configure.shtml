@@ -1,5 +1,20 @@
 %!: /header.html
 
-This is the Configuration page!
+<form action="/configure.shtml" method="POST">
+    <input id="0" type="hidden" value="0" name="0" />
+
+    <div class="form-group">
+        <label for="LimitInf">Limit Inferior</label>
+        <input type="text" class="form-control" id="LimitInf" name="LimitInf" placeholder="Limit Inferior">
+    </div>
+    
+    <div class="form-group">
+        <label for="LimitSup">Limit Superior</label>
+        <input type="text" class="form-control" id="LimitSup" name="LimitSup" placeholder="Limit Inferior">
+    </div>
+    <input id="0" type="hidden" value="1" name="1" />
+    
+    <button type="submit" class="btn btn-default">Submit</button>
+</form>
 
 %!: /footer.html

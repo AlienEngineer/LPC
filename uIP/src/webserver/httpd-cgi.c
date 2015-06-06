@@ -60,6 +60,7 @@ HTTPD_CGI_CALL(net, "net-stats", net_stats);
 HTTPD_CGI_CALL(logs, "room-temp", room_temp);
 
 static const struct httpd_cgi_call *calls[] = { &file, &tcp, &net, &logs, NULL };
+char http_post_data[HTTP_POST_LEN];
 
 typedef struct {
 	int8_t temperature;

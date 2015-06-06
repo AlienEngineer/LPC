@@ -55,6 +55,10 @@
 
 typedef PT_THREAD((* httpd_cgifunction)(struct httpd_state *, char *));
 
+#define HTTP_POST_LEN		150
+
+extern char http_post_data[HTTP_POST_LEN];
+
 httpd_cgifunction httpd_cgi(char *name);
 
 struct httpd_cgi_call {

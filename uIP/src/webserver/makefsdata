@@ -44,7 +44,7 @@ foreach $file (@files) {
 	$i = 0;        
 	while(read(FILE, $data, 1)) {
 	    if($i == 0) {
-		print(OUTPUT "\t");
+		print(OUTPUT "\t"); 
 	    }
 	    
 	    printf(OUTPUT "%#02x, ", unpack("C", $data));

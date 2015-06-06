@@ -38,6 +38,10 @@
 #include "psock.h"
 #include "httpd-fs.h"
 
+#define HTTP_NONE 		1
+#define HTTP_GET 		2
+#define HTTP_POST 		3
+
 struct httpd_state {
   unsigned char timer;
   struct psock sin, sout;
