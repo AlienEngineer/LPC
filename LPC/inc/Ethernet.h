@@ -3,7 +3,7 @@
 #define ETHERNET_H_
 
 #include <common.h>
-#include <Timers.h>
+#include <LPCTimer.h>
 
 /* EMAC Memory Buffer configuration for 16K Ethernet RAM. */
 #define NUM_RX_FRAG 		4 /* Num.of RX Fragments 4*1536= 6.0kB */
@@ -43,6 +43,7 @@ class Ethernet {
 public:
 	// Ethernet(Timer * timer);
 	static void Init();
+	static void Init(Timer * timer);
 	static uint32_t Send(void * data, uint32_t size);
 	static uint32_t Receive(void * buffer, uint32_t bufferSize);
 private:

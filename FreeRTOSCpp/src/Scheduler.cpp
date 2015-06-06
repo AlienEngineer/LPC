@@ -14,3 +14,7 @@ void Scheduler::Start() {
 void Scheduler::Delay(uint32_t timeout) {
 	vTaskDelay(timeout);
 }
+
+void Scheduler::Yield() {
+	taskYIELD();
+}

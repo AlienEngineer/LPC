@@ -2,7 +2,7 @@
 
 #include <LCD.h>
 #include <SPI.h>
-#include <Timers.h>
+#include <LPCTimer.h>
 #include <GPIO.h>
 #include <stdio.h>
 #include <stdarg.h>

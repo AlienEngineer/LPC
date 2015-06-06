@@ -14,6 +14,7 @@ class Scheduler {
 public:
 	static void Start();
 	static void Delay(uint32_t timeout);
+	static void Yield();
 };
 
 #endif /* SCHEDULER_H_ */

@@ -5,6 +5,8 @@
 	<projects>
 		<project>CMSIS_CORE_LPC17xx</project>
 		<project>FreeRTOS</project>
+		<project>FreeRTOSCpp</project>
+		<project>LPC</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

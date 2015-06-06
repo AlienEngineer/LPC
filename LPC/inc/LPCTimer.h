@@ -19,7 +19,7 @@ class Timer {
 public:
 	Timer(uint32_t timer);
 	Timer();
-	void DelayMS(uint32_t millis);
+	virtual void DelayMS(uint32_t millis);
 	static uint32_t GetTickCount(uint32_t timer);
 private:
 	void Init(uint32_t timer);

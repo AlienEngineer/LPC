@@ -31,8 +31,9 @@
 								<option id="gnu.c.compiler.option.include.paths.748402956" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" valueType="includePath">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LPC/inc}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/FreeRTOS/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/FreeRTOSCpp/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/FreeRTOS/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/WebServer/inc}&quot;"/>
 								</option>
 								<inputType id="com.crt.advproject.compiler.input.2129352523" superClass="com.crt.advproject.compiler.input"/>
 							</tool>
@@ -50,11 +51,11 @@
 								<option id="com.crt.advproject.link.cpp.hdrlib.885106063" name="Library" superClass="com.crt.advproject.link.cpp.hdrlib" value="com.crt.advproject.cpp.link.hdrlib.newlib.semihost" valueType="enumerated"/>
 								<option id="gnu.cpp.link.option.libs.1163395737" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" value="CMSIS_CORE_LPC17xx"/>
+									<listOptionValue builtIn="false" value="FreeRTOSCpp"/>
 									<listOptionValue builtIn="false" value="Components"/>
 									<listOptionValue builtIn="false" value="LPC"/>
 									<listOptionValue builtIn="false" value="uIP"/>
 									<listOptionValue builtIn="false" value="FreeRTOS"/>
-									<listOptionValue builtIn="false" value="FreeRTOSCpp"/>
 								</option>
 								<option id="gnu.cpp.link.option.paths.695331933" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/CMSIS_CORE_LPC17xx/Debug}&quot;"/>
@@ -93,8 +94,9 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LPC/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/uIP/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/uIP/src/webserver}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/FreeRTOS/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/FreeRTOSCpp/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/FreeRTOS/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/WebServer/inc}&quot;"/>
 								</option>
 								<inputType id="com.crt.advproject.compiler.cpp.input.1500090085" superClass="com.crt.advproject.compiler.cpp.input"/>
 							</tool>
@@ -110,8 +112,9 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/LPC/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/uIP/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/uIP/src/webserver}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/FreeRTOS/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/FreeRTOSCpp/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/FreeRTOS/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/WebServer/inc}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.330965012" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 								<inputType id="com.crt.advproject.assembler.input.52291103" name="Additional Assembly Source Files" superClass="com.crt.advproject.assembler.input"/>
@@ -119,6 +122,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="inc"/>
 						<entry excluding="webserver/httpd-fsdata.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>
@@ -170,6 +174,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/FreeRTOS/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/FreeRTOSCpp/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/WebServer/inc}&quot;"/>
 								</option>
 								<inputType id="com.crt.advproject.compiler.cpp.input.1300480169" superClass="com.crt.advproject.compiler.cpp.input"/>
 							</tool>
@@ -198,6 +203,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/FreeRTOS/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/FreeRTOSCpp/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/WebServer/inc}&quot;"/>
 								</option>
 								<inputType id="com.crt.advproject.compiler.input.238884123" superClass="com.crt.advproject.compiler.input"/>
 							</tool>
@@ -217,6 +223,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/Components/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/FreeRTOS/inc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/FreeRTOSCpp/inc}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/WebServer/inc}&quot;"/>
 								</option>
 								<inputType id="cdt.managedbuild.tool.gnu.assembler.input.482567493" superClass="cdt.managedbuild.tool.gnu.assembler.input"/>
 								<inputType id="com.crt.advproject.assembler.input.1634163471" name="Additional Assembly Source Files" superClass="com.crt.advproject.assembler.input"/>
@@ -259,6 +266,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="inc"/>
 						<entry excluding="webserver/httpd-fsdata.c" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 					</sourceEntries>
 				</configuration>

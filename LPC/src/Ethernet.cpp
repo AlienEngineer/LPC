@@ -1,7 +1,7 @@
 #include <Ethernet.h>
 #include <PIN.h>
 #include <RMII.h>
-#include <Timers.h>
+#include <LPCTimer.h>
 #include <string.h>
 #include <stdio.h>
 
@@ -102,13 +102,17 @@ uint32_t RMII_Read(uint32_t reg) {
 }
 
 void Ethernet::Init() {
+	Timer timer;
+	Ethernet::Init(&timer);
+}
+
+void Ethernet::Init(Timer * timer) {
 
 	if (initialized) {
 		return;
 	}
 
 	RMII rmii;
-	Timer timer;
 
 	PIN::SetFunction(1, 0, PINSEL_ETHERNET);
 	PIN::SetFunction(1, 1, PINSEL_ETHERNET);
@@ -125,26 +129,26 @@ void Ethernet::Init() {
 	LPC_SC->PCONP |= PCOMP_ETHERNET;
 
 	LPC_EMAC->MAC1 = EMAC_MAC1_RESETS; // Set all resets!
-	timer.DelayMS(100);
+	timer->DelayMS(100);
 	LPC_EMAC->MAC1 = EMAC_MAC1_RECEIVE_ENABLE; // Set options, remove resets
 
 	LPC_EMAC->Command |= EMAC_CMD_RESETS;
 
-	timer.DelayMS(100);
+	timer->DelayMS(100);
 
 	LPC_EMAC->MAC2 = EMAC_MAC2_CRC_ENABLE | EMAC_MAC2_PAD_CRC_ENABLE;
 	LPC_EMAC->IPGR = 0x12;
 
 	LPC_EMAC->MCFG = EMAC_MCFG_SPEED_DIVIDER | EMAC_MCFG_MII_RESET;
-	timer.DelayMS(100);
+	timer->DelayMS(100);
 	LPC_EMAC->MCFG = EMAC_MCFG_SPEED_DIVIDER;
 
 	LPC_EMAC->Command = EMAC_CMD_PASS_RX_FILTER | EMAC_CMD_TX_FLOW_CONTROL | EMAC_CMD_PASS_RUNT_FRAME | EMAC_CMD_RMII;
-	timer.DelayMS(100);
+	timer->DelayMS(100);
 
 	// Reset RMII
 	rmii.Reset();
-	timer.DelayMS(100);
+	timer->DelayMS(100);
 
 	// printf("RMII id %d\n", rmii.GetId());
 
@@ -195,7 +199,7 @@ void Ethernet::Init() {
 	LPC_EMAC->Command |= EMAC_CMD_RX_ENABLE | EMAC_CMD_TX_ENABLE;
 	LPC_EMAC->MAC1 |= EMAC_MAC1_RECEIVE_ENABLE;
 
-	timer.DelayMS(100);
+	timer->DelayMS(100);
 
 	initialized = true;
 }

@@ -16,6 +16,8 @@ extern "C" {
 	#include <semphr.h>
 }
 
+#include <Thread.h>
+
 #define STACK_SIZE 		512
 
 #endif /* FREERTOSCPP_H_ */
