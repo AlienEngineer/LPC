@@ -5,12 +5,12 @@
 
     <div class="form-group">
         <label for="LimitInf">Limit Inferior</label>
-        <input type="text" class="form-control" id="LimitInf" name="LimitInf" placeholder="Limit Inferior">
+        <input type="text" class="form-control" id="LimitInf" name="LimitInf" placeholder="Inferior Limit">
     </div>
     
     <div class="form-group">
         <label for="LimitSup">Limit Superior</label>
-        <input type="text" class="form-control" id="LimitSup" name="LimitSup" placeholder="Limit Inferior">
+        <input type="text" class="form-control" id="LimitSup" name="LimitSup" placeholder="Supeior Limit">
     </div>
     <input id="0" type="hidden" value="1" name="1" />
     

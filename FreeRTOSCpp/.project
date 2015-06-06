@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>WebServer</name>
+	<name>FreeRTOSCpp</name>
 	<comment></comment>
 	<projects>
 		<project>CMSIS_CORE_LPC17xx</project>
-		<project>LPC</project>
-		<project>uIP</project>
-		<project>Components</project>
 		<project>FreeRTOS</project>
-		<project>FreeRTOSCpp</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

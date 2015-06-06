@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>WebServer</name>
+	<name>FreeRTOS</name>
 	<comment></comment>
 	<projects>
 		<project>CMSIS_CORE_LPC17xx</project>
-		<project>LPC</project>
-		<project>uIP</project>
-		<project>Components</project>
-		<project>FreeRTOS</project>
-		<project>FreeRTOSCpp</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
@@ -26,7 +21,6 @@
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.cdt.core.cnature</nature>
-		<nature>org.eclipse.cdt.core.ccnature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.managedBuildNature</nature>
 		<nature>org.eclipse.cdt.managedbuilder.core.ScannerConfigNature</nature>
 	</natures>
