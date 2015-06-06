@@ -6,6 +6,7 @@ extern "C" {
 #include "clock-arch.h"
 }
 
+#include <AppThreads.h>
 #include <string.h>
 #include <stdio.h>
 #include <Ethernet.h>
@@ -45,7 +46,7 @@ void WebThread( void * pvParameters ) {
 
 	tapdev_init();
 	uip_init();
-	uip_initdata(pvParameters);
+	uip_initdata(&data);
 
 	uip_ipaddr(ipaddr, 192, 168, 3, 20);
 	uip_sethostaddr(ipaddr);

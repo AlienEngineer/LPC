@@ -1,6 +1,5 @@
 %!: /header.html
 
-This is the log view page!
-<p>%! room-temp
-º celsius</p>
+<p>Current room temperature: %! room-temp
+ celsius</p>
 %!: /footer.html

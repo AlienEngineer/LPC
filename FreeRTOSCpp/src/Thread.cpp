@@ -8,6 +8,6 @@
 #include <Thread.h>
 
 Thread::Thread(pdTASK_CODE pxTaskCode, const signed char * const pcName, void *pvParameters, unsigned portBASE_TYPE uxPriority) {
-	xTaskCreate(pxTaskCode, pcName, STACK_SIZE, pvParameters, uxPriority, &this->handle);
+	xTaskCreate(pxTaskCode, pcName, STACK_SIZE, pvParameters, uxPriority | portPRIVILEGE_BIT, &this->handle);
 }
 

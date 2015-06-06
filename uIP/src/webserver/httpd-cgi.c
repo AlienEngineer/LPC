@@ -70,7 +70,7 @@ typedef struct {
 static unsigned short
 generate_room_temp(void *arg)
 {
-  return snprintf((char *)uip_appdata, UIP_APPDATA_SIZE, "%d", ((APP_DATA*)uip_customdata)->temperature);
+  return snprintf((char *)uip_appdata, UIP_APPDATA_SIZE, "%d&#186;", ((APP_DATA*)uip_customdata)->temperature);
 }
 /*---------------------------------------------------------------------------*/
 static

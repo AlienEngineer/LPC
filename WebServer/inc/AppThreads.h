@@ -14,6 +14,8 @@ typedef struct {
 	int8_t temperature;
 } APP_DATA;
 
+extern APP_DATA data;
+
 /**
  * Code of Web Thread.
  */
