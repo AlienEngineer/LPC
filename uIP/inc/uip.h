@@ -187,10 +187,6 @@ typedef uip_ip4addr_t uip_ipaddr_t;
  */
 void uip_init(void);
 
- /**
-  * Link some data to be used by cgi
-  */
-void uip_initdata(void * data);
 /**
  * uIP initialization function.
  *

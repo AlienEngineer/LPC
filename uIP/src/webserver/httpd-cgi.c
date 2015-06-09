@@ -62,34 +62,41 @@ HTTPD_CGI_CALL(logs, "room-temp", room_temp);
 static const struct httpd_cgi_call *calls[] = { &file, &tcp, &net, &logs, NULL };
 char http_post_data[HTTP_POST_LEN];
 
-typedef struct {
-	int8_t temperature;
-} APP_DATA;
+
 
 /*---------------------------------------------------------------------------*/
-static unsigned short
-generate_room_temp(void *arg)
-{
-  return snprintf((char *)uip_appdata, UIP_APPDATA_SIZE, "%d&#186;", ((APP_DATA*)uip_customdata)->temperature);
-}
+//static unsigned short generate_room_temp(void *arg) {
+//	return snprintf((char *) uip_appdata, UIP_APPDATA_SIZE, "%d&#186;",
+//			((APP_DATA*) uip_customdata)->temperature);
+//}
 /*---------------------------------------------------------------------------*/
 static
 PT_THREAD(room_temp(struct httpd_state *s, char *ptr))
 {
+	struct request_struct request;
+	request.buffer = uip_appdata;
+	request.s = s;
 
-  PSOCK_BEGIN(&s->sout);
+	PSOCK_BEGIN(&s->sout);
 
-  PSOCK_GENERATOR_SEND(&s->sout, generate_room_temp, s);
+	PSOCK_GENERATOR_SEND(&s->sout, Http_Generate_payload, &request);
 
-  PSOCK_END(&s->sout);
+	PSOCK_END(&s->sout);
 }
 
 /*---------------------------------------------------------------------------*/
 static
 PT_THREAD(nullfunction(struct httpd_state *s, char *ptr))
 {
-  PSOCK_BEGIN(&s->sout);
-  PSOCK_END(&s->sout);
+	struct request_struct request;
+	request.buffer = uip_appdata;
+	request.s = s;
+
+	PSOCK_BEGIN(&s->sout);
+
+	PSOCK_GENERATOR_SEND(&s->sout, Http_Generate_payload, &request);
+
+	PSOCK_END(&s->sout);
 }
 /*---------------------------------------------------------------------------*/
 httpd_cgifunction

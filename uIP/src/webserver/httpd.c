@@ -268,6 +268,7 @@ PT_THREAD(handle_input(struct httpd_state *s)) {
 			for(i = 500; s->sin.readptr[i]; ++i) {
 				if (strncmp(&s->sin.readptr[i], http_datastart, 4) == 0) {
 					memcpy(http_post_data, &s->sin.readptr[i], HTTP_POST_LEN);
+					Http_RequestPayload_Handler(http_post_data);
 					break;
 				}
 			}

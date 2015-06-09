@@ -9,9 +9,12 @@
 #define APPTHREADS_H_
 
 #include <Scheduler.h>
+#include <Queue.h>
+
 
 typedef struct {
 	int8_t temperature;
+	Queue<uint8_t> * temperatures;
 } APP_DATA;
 
 extern APP_DATA data;

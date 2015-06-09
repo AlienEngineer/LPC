@@ -38,6 +38,7 @@
 #include "psock.h"
 #include "httpd-fs.h"
 
+#define WEAK __attribute__ ((weak))
 #define HTTP_NONE 		1
 #define HTTP_GET 		2
 #define HTTP_POST 		3
@@ -57,10 +58,18 @@ struct httpd_state {
   unsigned short count;
 };
 
+struct request_struct {
+	struct httpd_state * s;
+	void * buffer;
+} ;
+
 void httpd_init(void);
 void httpd_appcall(void);
 
 void httpd_log(char *msg);
 void httpd_log_file(u16_t *requester, char *file);
+
+WEAK void Http_RequestPayload_Handler(char * payload);
+WEAK unsigned short Http_Generate_payload(struct request_struct * request);
 
 #endif /* __HTTPD_H__ */

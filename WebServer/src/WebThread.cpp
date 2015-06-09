@@ -1,9 +1,10 @@
 
 extern "C" {
-#include <uip.h>
-#include <uip_arp.h>
-#include <timer.h>
-#include "clock-arch.h"
+	#include <uip.h>
+	#include <httpd.h>
+	#include <uip_arp.h>
+	#include <timer.h>
+	#include "clock-arch.h"
 }
 
 #include <AppThreads.h>
@@ -13,6 +14,26 @@ extern "C" {
 #include <LPCTimer.h>
 #include <Scheduler.h>
 
+
+extern "C" void Http_RequestPayload_Handler(char * payload) {
+
+}
+
+
+extern "C" unsigned short Http_Generate_payload(struct request_struct * request) {
+
+	if (strncmp(&request->s->filename[1], "logs.shtml", 5) == 0) {
+		uint8_t temp = data.temperatures->Dequeue();
+
+		if (temp == 0) {
+			temp = data.temperature;
+		}
+
+		return snprintf((char *)request->buffer, UIP_APPDATA_SIZE, "%d&#186;", temp);
+	}
+
+	return 0;
+}
 
 void tapdev_init() {
 	Ethernet::Init();
@@ -32,11 +53,7 @@ extern "C" clock_time_t clock_time(void) {
 	return (clock_time_t) Timer::GetTickCount(SYSTICK);
 }
 
-
-
 void WebThread( void * pvParameters ) {
-
-
 	int i;
 	uip_ipaddr_t ipaddr;
 	struct timer periodic_timer, arp_timer;
@@ -46,7 +63,6 @@ void WebThread( void * pvParameters ) {
 
 	tapdev_init();
 	uip_init();
-	uip_initdata(&data);
 
 	uip_ipaddr(ipaddr, 192, 168, 3, 20);
 	uip_sethostaddr(ipaddr);

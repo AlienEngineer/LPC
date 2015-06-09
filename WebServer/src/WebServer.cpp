@@ -15,13 +15,17 @@
 #include <cr_section_macros.h>
 
 #include <AppThreads.h>
+#include <ConcurrentQueue.h>
 
 //
 // Shared app memory block.
 APP_DATA data;
-
+Queue<uint8_t> queue;
 
 int main(void) {
+
+
+	data.temperatures = &queue;
 
 	Thread webThread(WebThread, (const signed char * const)"Web", &data, tskIDLE_PRIORITY);
 	Thread temperatureThread(TemperatureThread, (const signed char * const)"Temperature", &data, tskIDLE_PRIORITY);
@@ -29,4 +33,3 @@ int main(void) {
 	Scheduler::Start();
 	return 0;
 }
-
