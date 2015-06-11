@@ -10,14 +10,9 @@
 
 #include <Scheduler.h>
 #include <Queue.h>
+#include <Context.h>
 
-
-typedef struct {
-	int8_t temperature;
-	Queue<uint8_t> * temperatures;
-} APP_DATA;
-
-extern APP_DATA data;
+extern Context context;
 
 /**
  * Code of Web Thread.
@@ -28,5 +23,10 @@ void WebThread( void * pvParameters );
  * Code of Temperature Thread
  */
 void TemperatureThread( void * pvParameters );
+
+
+void LogRecordThread( void * pvParameters );
+
+void OutputThread( void * pvParameters );
 
 #endif /* APPTHREADS_H_ */

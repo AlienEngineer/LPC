@@ -54,6 +54,7 @@ struct httpd_state {
   int len;
   char *scriptptr;
   int scriptlen;
+  int recall;
   
   unsigned short count;
 };
@@ -69,7 +70,7 @@ void httpd_appcall(void);
 void httpd_log(char *msg);
 void httpd_log_file(u16_t *requester, char *file);
 
-WEAK void Http_RequestPayload_Handler(char * payload);
+WEAK void Http_RequestPayload_Handler(struct request_struct * request);
 WEAK unsigned short Http_Generate_payload(struct request_struct * request);
 
 #endif /* __HTTPD_H__ */

@@ -94,7 +94,14 @@ PT_THREAD(nullfunction(struct httpd_state *s, char *ptr))
 
 	PSOCK_BEGIN(&s->sout);
 
-	PSOCK_GENERATOR_SEND(&s->sout, Http_Generate_payload, &request);
+	s->recall = 0;
+
+	do
+	{
+
+		PSOCK_GENERATOR_SEND(&s->sout, Http_Generate_payload, &request);
+
+	} while(s->recall != 0);
 
 	PSOCK_END(&s->sout);
 }

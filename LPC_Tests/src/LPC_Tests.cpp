@@ -10,18 +10,18 @@
 
 #include <cr_section_macros.h>
 
-
 #include <GPIO.h>
 #include <PIN.h>
-#include <Timers.h>
+#include <LPCTimer.h>
 #include <SPI.h>
 #include <Ethernet.h>
 #include <stdio.h>
+#include <RTC.h>
+#include <Flash.h>
 
 #define LED_PIN   22
 
-#define PINSEL_TEST
-
+#define FLASH_TEST 		1
 
 void delay(uint32_t millis) {
 	millis *= SystemCoreClock / 1000;
@@ -104,23 +104,48 @@ void TestSPI() {
 	spi_config.CPOL = 1;
 	spi_config.SPCCR = 8;
 
-
 	SPI spi(&spi_config);
 
-	spi.Send(16);
 
 	TestGPIO();
+}
+
+void TestRTC() {
+	GPIO gpio0(LPC_GPIO0);
+	RTC rtc(2015, 6, 10, 12, 56, 0);
+
+	gpio0.PinMode(LED_PIN, OUTPUT);
+
+	while (1) {
+
+		DateTime * dt = rtc.GetDate();
+
+		if ((dt->Second%10) == 0) {
+			HeartBeat(gpio0);
+		}
+	}
 }
 
 void TestETHERNET() {
 	Ethernet::Init();
 
-	while(1) {
-
+	while (1) {
 
 	}
 
 }
+
+void TestFLASH() {
+	Flash flash(14, 14);
+
+
+
+	while (1) {
+
+	}
+
+}
+
 
 int main(void) {
 
@@ -136,12 +161,20 @@ int main(void) {
 	TestSPI();
 #endif
 
+#ifdef RTC_TEST
+	TestRTC();
+#endif
+
+#ifdef FLASH_TEST
+	TestFLASH();
+#endif
+
 #ifdef ETHERNET_TEST
 	TestETHERNET();
 #endif
 
 	// By default test GPIO with heart beat
-	while(1) {
+	while (1) {
 
 		TestGPIO();
 

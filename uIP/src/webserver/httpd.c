@@ -236,6 +236,10 @@ static
 PT_THREAD(handle_input(struct httpd_state *s)) {
 	uint8_t method = HTTP_NONE;
 	uint32_t i = 500;
+	struct request_struct request;
+		request.buffer = http_post_data;
+		request.s = s;
+
 
 	PSOCK_BEGIN(&s->sin)
 		;
@@ -265,10 +269,10 @@ PT_THREAD(handle_input(struct httpd_state *s)) {
 		/*  httpd_log_file(uip_conn->ripaddr, s->filename);*/
 
 		if (method == HTTP_POST) {
-			for(i = 500; s->sin.readptr[i]; ++i) {
+			for(; s->sin.readptr[i]; ++i) {
 				if (strncmp(&s->sin.readptr[i], http_datastart, 4) == 0) {
 					memcpy(http_post_data, &s->sin.readptr[i], HTTP_POST_LEN);
-					Http_RequestPayload_Handler(http_post_data);
+					Http_RequestPayload_Handler(&request);
 					break;
 				}
 			}

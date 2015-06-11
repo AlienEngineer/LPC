@@ -19,16 +19,26 @@
 
 //
 // Shared app memory block.
-APP_DATA data;
-Queue<uint8_t> queue;
+Context context;
 
 int main(void) {
 
+	// Flash simulation!
+	context.LimitInf = 10;
+	context.LimitSup = 25;
+	context.RealTimeClock.Config(2015, 6, 10, 18, 33, 0);
 
-	data.temperatures = &queue;
+	Thread webThread(WebThread, (const signed char * const ) "Web", NULL,
+			tskIDLE_PRIORITY);
 
-	Thread webThread(WebThread, (const signed char * const)"Web", &data, tskIDLE_PRIORITY);
-	Thread temperatureThread(TemperatureThread, (const signed char * const)"Temperature", &data, tskIDLE_PRIORITY);
+	Thread temperatureThread(TemperatureThread,
+			(const signed char * const ) "Temperature", NULL, tskIDLE_PRIORITY);
+
+	Thread logRecordThread(LogRecordThread,
+				(const signed char * const ) "LogRecord", NULL, tskIDLE_PRIORITY);
+
+	Thread outputThread(OutputThread,
+				(const signed char * const ) "Output", NULL, tskIDLE_PRIORITY);
 
 	Scheduler::Start();
 	return 0;

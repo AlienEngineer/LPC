@@ -1,5 +1,6 @@
 
 #include <Thermometer.h>
+#include <PIN.h>
 #include <AppThreads.h>
 
 void TemperatureThread( void * pvParameters ) {
@@ -10,13 +11,26 @@ void TemperatureThread( void * pvParameters ) {
 
 		temp = thermo.GetTemperature();
 
-		data.temperature = temp;
+		context.CurrentTemperature = temp;
 
-		//
-		// Enqueue temperature to be consumed by other threads.
-		data.temperatures->Enqueue(temp);
+		if (temp > context.LimitSup || temp < context.LimitInf) {
+			context.OutputEvent.Signal();
+		}
 
 		Scheduler::Delay(1000);
+
+	}
+}
+
+
+void OutputThread( void * pvParameters ) {
+	PIN alarmPin(0, 22);
+
+	while(1) {
+
+		context.OutputEvent.Wait();
+
+		alarmPin.Set();
 
 	}
 }

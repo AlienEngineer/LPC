@@ -1,5 +1,15 @@
 %!: /header.html
 
+<script>
+    document.addEventListener("DOMContentLoaded", function(event) { 
+        var data = %! config-data
+        ;
+        $("#LimitInf").val(data.limitInf);
+        $("#LimitSup").val(data.limitSup);
+        $("#CurrTime").val(data.date);
+    });    
+</script>
+
 <form action="/configure.shtml" method="POST">
     <input id="0" type="hidden" value="0" name="0" />
 

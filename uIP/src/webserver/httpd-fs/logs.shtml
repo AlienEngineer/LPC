@@ -2,4 +2,10 @@
 
 <p>Current room temperature: %! room-temp
  celsius</p>
+
+
+<ul class="list-group">
+    %! log-list    
+</ul>
+
 %!: /footer.html
