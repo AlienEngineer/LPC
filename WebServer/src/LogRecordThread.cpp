@@ -13,21 +13,9 @@ void LogRecordThread( void * pvParameters ) {
 		DateTime * date = context.RealTimeClock.GetDate();
 
 		if (hour != date->Hour) {
-			LogEntry * logEntry = &context.Entries[context.EntryIndex];
-
-			logEntry->Temperature = context.CurrentTemperature;
-			logEntry->Date.Year = date->Year;
-			logEntry->Date.Month = date->Month;
-			logEntry->Date.Day = date->Day;
-			logEntry->Date.Hour = date->Hour;
-			logEntry->Date.Minute = date->Minute;
-			logEntry->Date.Second = date->Second;
-			logEntry->HasData = true;
-
-			context.EntryIndex++;
-			if (context.EntryIndex >= WEEK_HOURS) {
-				context.EntryIndex = 0;
-			}
+			//
+			// Logs the current datetime and temperature into a log entry.
+			context.Log();
 
 			hour = date->Hour;
 		}

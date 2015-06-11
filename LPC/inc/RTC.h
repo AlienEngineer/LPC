@@ -25,6 +25,7 @@ public:
 
 
 	uint32_t TimeToSeconds();
+	void CopyTo(DateTime * date);
 
 };
 

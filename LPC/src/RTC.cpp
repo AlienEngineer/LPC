@@ -94,3 +94,12 @@ DateTime::DateTime(uint16_t year, uint16_t month, uint16_t day, uint8_t hour, ui
 uint32_t DateTime::TimeToSeconds() {
 	return this->Second + (this->Minute * 60) + (this->Hour * 60 * 60);
 }
+
+void DateTime::CopyTo(DateTime * date) {
+	date->Year = this->Year;
+	date->Month = this->Month;
+	date->Day = this->Day;
+	date->Hour = this->Hour;
+	date->Minute = this->Minute;
+	date->Second = this->Second;
+}

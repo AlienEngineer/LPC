@@ -23,10 +23,7 @@ Context context;
 
 int main(void) {
 
-	// Flash simulation!
-	context.LimitInf = 10;
-	context.LimitSup = 25;
-	context.RealTimeClock.Config(2015, 6, 10, 18, 33, 0);
+
 
 	Thread webThread(WebThread, (const signed char * const ) "Web", NULL,
 			tskIDLE_PRIORITY);
@@ -36,9 +33,6 @@ int main(void) {
 
 	Thread logRecordThread(LogRecordThread,
 				(const signed char * const ) "LogRecord", NULL, tskIDLE_PRIORITY);
-
-	Thread outputThread(OutputThread,
-				(const signed char * const ) "Output", NULL, tskIDLE_PRIORITY);
 
 	Scheduler::Start();
 	return 0;

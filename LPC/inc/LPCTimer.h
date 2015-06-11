@@ -10,8 +10,9 @@
 
 #include <common.h>
 
-#define TIMER_MILLIS	(SystemCoreClock/1000)
+
 #define TIMER_INTERVAL	(10)
+#define TIMER_MILLIS	(SystemCoreClock/1000)*TIMER_INTERVAL
 #define SYSTICK		0
 
 
@@ -21,6 +22,7 @@ public:
 	Timer();
 	virtual void DelayMS(uint32_t millis);
 	static uint32_t GetTickCount(uint32_t timer);
+	static uint32_t GetElapsed(uint32_t timer, uint32_t last);
 private:
 	void Init(uint32_t timer);
 	uint32_t timer;

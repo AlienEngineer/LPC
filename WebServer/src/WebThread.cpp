@@ -49,10 +49,9 @@ uint32_t GetInt(char * str, uint8_t start, uint8_t len) {
 extern "C" void Http_RequestPayload_Handler(struct request_struct * request) {
 	StartToken((char*) request->buffer);
 
-	if (strncmp(&request->s->filename[1], "configure.shtml", 10) == 0) {
+	if (IsPageRequest("configure.shtml", 10)) {
 
-		context.LimitInf = GetNextInt(LIMIT_INF);
-		context.LimitSup = GetNextInt(LIMIT_SUP);
+		context.Config(GetNextInt(LIMIT_INF), GetNextInt(LIMIT_SUP));
 
 		char * token = NextToken(CURR_TIME);
 
@@ -64,9 +63,9 @@ extern "C" void Http_RequestPayload_Handler(struct request_struct * request) {
 		uint16_t minute = GetInt(token, 20, 2);
 		uint16_t second = GetInt(token, 25, 2);
 
-		// DateTime date(year, month, day, hour, minute, second);
-
 		context.RealTimeClock.Config(year, month, day, hour, minute, second);
+	} else if (IsPageRequest("alarmlogs.shtml", 10)) {
+		context.TurnAlarmOff = true;
 	}
 
 }
@@ -85,7 +84,7 @@ extern "C" unsigned short Http_Generate_payload(
 				request->s->recall++;
 
 				return snprintf((char *) request->buffer, UIP_APPDATA_SIZE,
-						"<li class=\"list-group-item\"><span class=\"badge\">%d</span>%03d - %04d/%02d/%02d %02d:%02d:%02d</li>",
+						"<li class=\"list-group-item\"><span class=\"badge\">%d&#186;</span>%03d - %04d/%02d/%02d %02d:%02d:%02d</li>",
 						entry.Temperature, request->s->recall, entry.Date.Year,
 						entry.Date.Month, entry.Date.Day, entry.Date.Hour,
 						entry.Date.Minute, entry.Date.Second);
@@ -96,6 +95,31 @@ extern "C" unsigned short Http_Generate_payload(
 		} else {
 			return snprintf((char *) request->buffer, UIP_APPDATA_SIZE,
 					"%d&#186;", context.CurrentTemperature);
+		}
+
+	}
+	else if (IsPageRequest("alarmlogs.shtml", 10)) {
+
+		if (strncmp(request->s->scriptptr, "log-list", 8) == 0) {
+
+			LogEntry entry = context.Alarms[request->s->recall];
+
+			if (entry.HasData) {
+
+				request->s->recall++;
+
+				return snprintf((char *) request->buffer, UIP_APPDATA_SIZE,
+						"<li class=\"list-group-item\"><span class=\"badge\">%d&#186;</span>%03d - %04d/%02d/%02d %02d:%02d:%02d</li>",
+						entry.Temperature, request->s->recall, entry.Date.Year,
+						entry.Date.Month, entry.Date.Day, entry.Date.Hour,
+						entry.Date.Minute, entry.Date.Second);
+			} else {
+				request->s->recall = 0;
+			}
+			return 1;
+		} else {
+			// Send state to page
+			return snprintf((char *) request->buffer, UIP_APPDATA_SIZE, "%d", context.TurnAlarmOff ? 0 : context.State);
 		}
 
 	} else if (IsPageRequest("configure.shtml", 10)) {

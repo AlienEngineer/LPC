@@ -27,6 +27,5 @@ void TemperatureThread( void * pvParameters );
 
 void LogRecordThread( void * pvParameters );
 
-void OutputThread( void * pvParameters );
 
 #endif /* APPTHREADS_H_ */

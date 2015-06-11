@@ -1,0 +1,23 @@
+%!: /header.html
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(event) { 
+        var data = %! app-state
+        ;
+        
+        if (data == 1) {
+            $("#alarmform").show();
+        }
+    });    
+</script>
+
+<form id="alarmform" action="/alarmlogs.shtml" method="post" style="display: none;">
+    <input id="0" name="0" type="hidden" value="0"> 
+    <input id="1" name="1" type="hidden" value="1"> 
+    <button class="btn btn-default" type="submit">Turn Off</button></form>
+<br/>
+<ul class="list-group">
+    %! log-list    
+</ul>
+
+%!: /footer.html
