@@ -293,6 +293,8 @@ void LCD::SetCursor(uint32_t x, uint32_t y) {
 
 void LCD::LineBreak() {
 	this->current_position.y += LINE_HEIGHT;
+	this->current_position.x = START_AT;
+	this->SetCursor(START_AT, this->current_position.y);
 }
 
 
@@ -304,9 +306,13 @@ void LCD::Write(char const * str) {
 			str++;
 		}
 
+		if (*str == '\n') {
+			this->LineBreak();
+			str++;
+		}
+
 		this->PutChar(*str++, (unsigned char *) font8x8);
-		this->SetCursor(this->current_position.x + COLUMN_WIDTH,
-				this->current_position.y);
+		this->SetCursor(this->current_position.x + COLUMN_WIDTH, this->current_position.y);
 	}
 }
 

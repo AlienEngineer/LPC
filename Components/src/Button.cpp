@@ -13,6 +13,7 @@
 Button::Button(uint32_t port, uint32_t pin, uint32_t longDelta) {
 	btPin.Init(port, pin);
 	this->longDelta = longDelta;
+	this->state = BT_NONE;
 }
 
 void Button::Evaluate() {

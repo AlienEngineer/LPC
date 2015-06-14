@@ -12,6 +12,10 @@
 #include <Queue.h>
 #include <Context.h>
 
+#define YIELDEXEC(code) \
+	code; \
+	Scheduler::Yield();
+
 extern Context context;
 
 /**
@@ -25,6 +29,8 @@ void WebThread( void * pvParameters );
 void TemperatureThread( void * pvParameters );
 
 void ButtonsThread(void * pvParameters);
+
+void MenuThread(void * pvParameters);
 
 void LogRecordThread( void * pvParameters );
 

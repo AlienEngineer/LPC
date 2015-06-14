@@ -7,7 +7,19 @@ Context::Context() {
 	// Flash simulation!
 	this->LimitInf = 10;
 	this->LimitSup = 25;
-	// this->RealTimeClock.Config(2015, 6, 10, 18, 33, 0);
+	this->RealTimeClock.Config(2015, 6, 14, 18, 58, 0);
+
+	this->EntryIndex = 0;
+	this->AlarmIndex = 0;
+	this->ButtonIndex = 0;
+	this->ButtonConsumeIndex = 0;
+	this->State = STATE_NONE;
+
+	for (uint8_t i = 0; i < BT_LEN; ++i) {
+		defaultButtonState.States[BT_LEN] = BT_NONE;
+	}
+
+	this->InputEvent.Wait();
 }
 
 void Context::Log() {
@@ -63,4 +75,76 @@ void Context::SaveButtonState(ButtonsState * buttonState) {
 		this->ButtonIndex = 0;
 	}
 
+	//
+	// Notify listener
+	InputEvent.Signal();
 }
+
+ButtonsState * Context::PopButtonState() {
+
+	if (this->ButtonConsumeIndex > BT_STATE_LEN) {
+		this->ButtonConsumeIndex = 0;
+	}
+
+	if (this->ButtonIndex == this->ButtonConsumeIndex) {
+		return &defaultButtonState;
+	}
+
+	return &this->Buttons[this->ButtonConsumeIndex++];
+}
+
+ButtonsState * Context::PeekButtonState() {
+
+	if (this->ButtonConsumeIndex > BT_STATE_LEN) {
+		this->ButtonConsumeIndex = 0;
+	}
+
+	if (this->ButtonIndex == this->ButtonConsumeIndex) {
+		return &defaultButtonState;
+	}
+
+	return &this->Buttons[this->ButtonConsumeIndex];
+}
+
+bool ButtonsState::Up() {
+	return this->States[BT_UP] == BT_PRESSED || this->States[BT_UP] == BT_LONGPRESS;
+}
+
+bool ButtonsState::Down() {
+	return this->States[BT_DW] == BT_PRESSED || this->States[BT_DW] == BT_LONGPRESS;
+}
+
+bool ButtonsState::Ok() {
+	return this->States[BT_OK] == BT_PRESSED || this->States[BT_OK] == BT_LONGPRESS;
+}
+
+bool ButtonsState::AnyChange() {
+	for (uint8_t i = 0; i < BT_LEN; ++i) {
+		if (this->States[i] != BT_NONE) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool ButtonsState::AnyPressed() {
+	for (uint8_t i = 0; i < BT_LEN; ++i) {
+		if (this->States[i] == BT_PRESSED || this->States[i] == BT_LONGPRESS) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+bool ButtonsState::AnyReleased() {
+	for (uint8_t i = 0; i < BT_LEN; ++i) {
+		if (this->States[i] == BT_RELEASED) {
+			return true;
+		}
+	}
+
+	return false;
+}
+

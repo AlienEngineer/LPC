@@ -70,7 +70,7 @@ void TemperatureThread(void * pvParameters) {
 		// Verifies if the temperature is out of bounds and turns on cooling, heat or alarm
 		lastTime = TurnOnOutput(lastTime, temp, alarmPin);
 
-		Scheduler::Delay(1000);
+		Scheduler::Delay(5000);
 
 	}
 }
