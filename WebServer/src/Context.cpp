@@ -49,3 +49,18 @@ void Context::Config(int8_t limitInf, int8_t limitSup) {
 	this->LimitInf = limitInf;
 	this->LimitSup = limitSup;
 }
+
+void Context::SaveButtonState(ButtonsState * buttonState) {
+
+	for(uint8_t i = 0; i < BT_LEN; ++i) {
+		this->Buttons[this->ButtonIndex].States[i] = buttonState->States[i];
+		buttonState->States[i] = BT_NONE;
+	}
+
+	this->ButtonIndex++;
+
+	if (this->ButtonIndex > BT_STATE_LEN) {
+		this->ButtonIndex = 0;
+	}
+
+}

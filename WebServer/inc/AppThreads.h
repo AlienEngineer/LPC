@@ -24,6 +24,7 @@ void WebThread( void * pvParameters );
  */
 void TemperatureThread( void * pvParameters );
 
+void ButtonsThread(void * pvParameters);
 
 void LogRecordThread( void * pvParameters );
 

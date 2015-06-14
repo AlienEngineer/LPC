@@ -18,7 +18,7 @@ PIN::PIN() { }
 void PIN::Init(uint32_t port, uint32_t pin) {
 	this->port = port;
 	this->pin = pin;
-	this->gpio.Init(((LPC_GPIO_TypeDef *)(LPC_GPIO0_BASE + port)));
+	this->gpio.Init(((LPC_GPIO_TypeDef *)(LPC_GPIO0_BASE) + port));
 }
 
 void PIN::SetFunction(uint32_t func) {
@@ -31,6 +31,9 @@ void PIN::SetFunction(uint32_t port, uint32_t pin, uint32_t func) {
 	PINSEL_Config((*base), pin, func);
 }
 
+bool PIN::IsOn() {
+	return this->gpio.DigitalRead(this->pin) == HIGH;
+}
 void PIN::Set() {
 	this->gpio.DigitalWrite(this->pin, HIGH);
 }

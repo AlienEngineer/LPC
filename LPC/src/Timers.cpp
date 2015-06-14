@@ -44,7 +44,7 @@ void Timer::DelayMS(uint32_t millis) {
 		// fix millis to match the same unit as elapsed.
 		millis /= TIMER_INTERVAL;
 
-		while ((tick_count - curr) != millis) {
+		while ((tick_count - curr) >= millis) {
 		}
 	}
 		break;

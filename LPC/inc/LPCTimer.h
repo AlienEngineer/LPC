@@ -11,7 +11,7 @@
 #include <common.h>
 
 
-#define TIMER_INTERVAL	(10)
+#define TIMER_INTERVAL	(1)
 #define TIMER_MILLIS	(SystemCoreClock/1000)*TIMER_INTERVAL
 #define SYSTICK		0
 

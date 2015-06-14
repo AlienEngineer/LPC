@@ -24,6 +24,7 @@ public:
 	static void SetFunction(uint32_t port, uint32_t pin, uint32_t func);
 	void Set();
 	void Clear();
+	bool IsOn();
 	void Mode(uint32_t mode);
 private:
 	__IO uint32_t port;

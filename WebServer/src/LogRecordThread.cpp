@@ -12,12 +12,12 @@ void LogRecordThread( void * pvParameters ) {
 	while(1) {
 		DateTime * date = context.RealTimeClock.GetDate();
 
-		if (hour != date->Hour) {
+		if (hour != date->Minute) {
 			//
 			// Logs the current datetime and temperature into a log entry.
 			context.Log();
 
-			hour = date->Hour;
+			hour = date->Minute;
 		}
 
 		Scheduler::Delay(MONITOR_INTERVAL);

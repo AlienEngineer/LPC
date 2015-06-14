@@ -14,6 +14,7 @@ public:
 	Thread(pdTASK_CODE pxTaskCode, const signed char * const pcName, void *pvParameters, unsigned portBASE_TYPE uxPriority);
 private:
 	xTaskHandle handle;
+	uint32_t result;
 };
 
 #endif /* THREAD_H_ */

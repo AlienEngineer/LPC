@@ -10,6 +10,7 @@
 
 #include <RTC.h>
 #include <AutomaticResetEvent.h>
+#include <Button.h>
 
 #define WEEK_HOURS      (24*7)
 #define ALARM_LOG_LEN	50
@@ -19,6 +20,18 @@
 #define STATE_TO_COLD	2
 #define STATE_TO_HOT	3
 
+#define BT_OK		0
+#define BT_UP		1
+#define BT_DW		2
+
+#define BT_LEN		3
+
+#define BT_STATE_LEN	10
+
+class ButtonsState {
+public:
+	uint8_t States[BT_LEN];
+};
 
 class LogEntry {
 public:
@@ -48,8 +61,10 @@ public:
 	uint16_t AlarmIndex;
 
 	//
-	// When output [Alarm, Cool or Heat] happens.
-	AutomaticResetEvent OutputEvent;
+	// Button states
+	ButtonsState Buttons[BT_STATE_LEN];
+	uint8_t ButtonIndex;
+	AutomaticResetEvent InputEvent;
 
 	//
 	// Current State
@@ -60,6 +75,7 @@ public:
 	void Log();
 	void LogAlarm();
 	void Config(int8_t limitInf, int8_t limitSup);
+	void SaveButtonState(ButtonsState * buttonState);
 };
 
 #endif /* CONTEXT_H_ */

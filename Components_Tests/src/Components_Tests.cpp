@@ -16,7 +16,7 @@
 
 #include <LCD.h>
 #include <Thermometer.h>
-#include <Timers.h>
+#include <LPCTimer.h>
 #include <Ethernet.h>
 
 #define RESET		2

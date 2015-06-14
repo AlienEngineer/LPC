@@ -34,6 +34,10 @@ int main(void) {
 	Thread logRecordThread(LogRecordThread,
 				(const signed char * const ) "LogRecord", NULL, tskIDLE_PRIORITY);
 
+	Thread buttonsThread(ButtonsThread,
+				(const signed char * const ) "Buttons", NULL, tskIDLE_PRIORITY);
+
+
 	Scheduler::Start();
 	return 0;
 }

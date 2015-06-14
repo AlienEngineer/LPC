@@ -21,7 +21,7 @@
 
 #define LED_PIN   22
 
-#define FLASH_TEST 		1
+#define FLASH_TE2ST 		1
 
 void delay(uint32_t millis) {
 	millis *= SystemCoreClock / 1000;
@@ -173,10 +173,33 @@ int main(void) {
 	TestETHERNET();
 #endif
 
+	PIN bt1(2, 0);
+	PIN bt2(2, 1);
+	PIN bt3(2, 2);
+
+	bt1.Mode(INPUT);
+	bt2.Mode(INPUT);
+	bt3.Mode(INPUT);
+	bt1.SetFunction(0);
+	bt2.SetFunction(0);
+	bt3.SetFunction(0);
+
+	LPC_PINCON->PINSEL4 = 0x3F;
+
 	// By default test GPIO with heart beat
 	while (1) {
 
-		TestGPIO();
+		// TestGPIO();
+
+		uint32_t val = LPC_GPIO2->FIOPIN;
+
+		bool b1 = !bt1.IsOn();
+		bool b2 = !bt2.IsOn();
+		bool b3 = !bt3.IsOn();
+
+		if (b1 || b2 || b3) {
+			printf("bt1: %d		bt2: %d		bt3: %d\n", b1, b2, b3);
+		}
 
 	}
 

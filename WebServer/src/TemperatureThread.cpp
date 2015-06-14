@@ -22,8 +22,7 @@ uint32_t TurnOffAlarm(uint32_t lastTime, PIN& alarmPin) {
 
 uint32_t TurnOnOutput(uint32_t lastTime, uint8_t temp, PIN& alarmPin) {
 	if (!context.TurnAlarmOff) {
-		if (Timer::GetElapsed(0, lastTime) >= 5000
-				&& (context.State == STATE_TO_COLD || context.State == STATE_TO_HOT)) {
+		if (Timer::GetElapsed(0, lastTime) >= 5000 && (context.State == STATE_TO_COLD || context.State == STATE_TO_HOT)) {
 
 			context.State = STATE_ALARM;
 			context.LogAlarm();
