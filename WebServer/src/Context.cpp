@@ -80,9 +80,12 @@ void Context::SaveButtonState(ButtonsState * buttonState) {
 	InputEvent.Signal();
 }
 
+bool Context::HasButtons() {
+	return (this->ButtonIndex != this->ButtonConsumeIndex);
+}
 ButtonsState * Context::PopButtonState() {
 
-	if (this->ButtonConsumeIndex > BT_STATE_LEN) {
+	if (this->ButtonConsumeIndex >= BT_STATE_LEN) {
 		this->ButtonConsumeIndex = 0;
 	}
 
@@ -93,9 +96,15 @@ ButtonsState * Context::PopButtonState() {
 	return &this->Buttons[this->ButtonConsumeIndex++];
 }
 
+
+ButtonsState * Context::GetLastButtonState() {
+
+	return &this->Buttons[this->ButtonIndex-1];
+}
+
 ButtonsState * Context::PeekButtonState() {
 
-	if (this->ButtonConsumeIndex > BT_STATE_LEN) {
+	if (this->ButtonConsumeIndex >= BT_STATE_LEN) {
 		this->ButtonConsumeIndex = 0;
 	}
 
@@ -107,15 +116,28 @@ ButtonsState * Context::PeekButtonState() {
 }
 
 bool ButtonsState::Up() {
-	return this->States[BT_UP] == BT_PRESSED || this->States[BT_UP] == BT_LONGPRESS;
+	return this->States[BT_UP] == BT_PRESSED;
 }
 
 bool ButtonsState::Down() {
-	return this->States[BT_DW] == BT_PRESSED || this->States[BT_DW] == BT_LONGPRESS;
+	return this->States[BT_DW] == BT_PRESSED;
 }
 
 bool ButtonsState::Ok() {
-	return this->States[BT_OK] == BT_PRESSED || this->States[BT_OK] == BT_LONGPRESS;
+	return this->States[BT_OK] == BT_PRESSED;
+}
+
+bool ButtonsState::HasChanged(ButtonsState * state) {
+	for (uint8_t i = 0; i < BT_LEN; ++i) {
+			if (this->States[i] != state->States[i]) {
+				return true;
+			}
+		}
+	return false;
+}
+
+bool ButtonsState::Equals(ButtonsState * state) {
+	return !this->HasChanged(state);
 }
 
 bool ButtonsState::AnyChange() {

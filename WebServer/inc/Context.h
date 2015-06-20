@@ -38,6 +38,8 @@ public:
 	bool Up();
 	bool Down();
 	bool Ok();
+	bool Equals(ButtonsState * state);
+	bool HasChanged(ButtonsState * state);
 };
 
 class LogEntry {
@@ -84,8 +86,10 @@ public:
 	void LogAlarm();
 	void Config(int8_t limitInf, int8_t limitSup);
 	void SaveButtonState(ButtonsState * buttonState);
+	ButtonsState * GetLastButtonState();
 	ButtonsState * PopButtonState();
 	ButtonsState * PeekButtonState();
+	bool HasButtons();
 private:
 	ButtonsState defaultButtonState;
 };

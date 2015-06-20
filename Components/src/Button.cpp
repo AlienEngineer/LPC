@@ -8,8 +8,6 @@
 #include <Button.h>
 #include <LPCTimer.h>
 
-
-
 Button::Button(uint32_t port, uint32_t pin, uint32_t longDelta) {
 	btPin.Init(port, pin);
 	this->longDelta = longDelta;
@@ -20,27 +18,33 @@ void Button::Evaluate() {
 	bool pressed = !btPin.IsOn();
 
 	switch (this->state) {
-		case BT_NONE:
-			if (pressed) {
-				this->timestamp = Timer::GetTickCount(SYSTICK);
-				state = BT_PRESSED;
-			}
+	case BT_NONE:
+		if (pressed) {
+			this->timestamp = Timer::GetTickCount(SYSTICK);
+			state = BT_PRESSED;
+		}
 
-			break;
-		case BT_PRESSED:
-			if (!pressed) {
-				state = BT_RELEASED;
-			}
+		break;
+	case BT_PRESSED:
 
-			if (Timer::GetElapsed(SYSTICK, this->timestamp) >= this->longDelta) {
-				state = BT_LONGPRESS;
-			}
+		// debounce time.
+		if (Timer::GetElapsed(SYSTICK, this->timestamp) <= 100) {
+			return;
+		}
 
-			break;
-		case BT_LONGPRESS:
-		case BT_RELEASED:
-			state = BT_NONE;
-			break;
+		if (!pressed) {
+			state = BT_RELEASED;
+		}
+
+		if (Timer::GetElapsed(SYSTICK, this->timestamp) >= this->longDelta) {
+			state = BT_LONGPRESS;
+		}
+
+		break;
+	case BT_LONGPRESS:
+	case BT_RELEASED:
+		state = BT_NONE;
+		break;
 	}
 
 }

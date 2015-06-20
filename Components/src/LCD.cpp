@@ -241,6 +241,9 @@ LCD::LCD(PIN * csPin, PIN * resetPin) {
 	this->Command(DISON);
 
 	csPin->Set();
+
+	this->current_position.y = LINE_HEIGHT;
+	this->current_position.x = START_AT;
 }
 
 void LCD::ClearArea(Coord * first, Coord * second) {
@@ -268,6 +271,10 @@ void LCD::ClearScreen() {
 	Coordinate2->size = Coordinate1->size = LCD_SIZE;
 
 	this->ClearArea(Coordinate1, Coordinate2);
+}
+
+void LCD::Goto(uint32_t line, uint32_t column) {
+	this->SetCursor(START_AT + column * COLUMN_WIDTH, line * LINE_HEIGHT);
 }
 
 void LCD::SetCursor(uint32_t x, uint32_t y) {
