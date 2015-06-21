@@ -3,7 +3,13 @@
 #include <AppThreads.h>
 #include <LPCTimer.h>
 
-uint32_t TurnOffAlarm(uint32_t lastTime, PIN& alarmPin) {
+#define TIME_BEFORE_SIGNAL 1000 * 5
+#define MONITOR_INTERVAL 1000 * 5
+PIN alarmPin(0, 22);
+PIN coolPin(2, 3);
+PIN heatPin(2, 4);
+
+uint32_t TurnOffAlarm(uint32_t lastTime) {
 	//
 	// Handle request to stop the alarm
 	if (context.TurnAlarmOff && context.State == STATE_ALARM) {
@@ -20,9 +26,9 @@ uint32_t TurnOffAlarm(uint32_t lastTime, PIN& alarmPin) {
 	return lastTime;
 }
 
-uint32_t TurnOnOutput(uint32_t lastTime, uint8_t temp, PIN& alarmPin) {
+uint32_t TurnOnOutput(uint32_t lastTime, uint8_t temp) {
 	if (!context.TurnAlarmOff) {
-		if (Timer::GetElapsed(0, lastTime) >= 5000 && (context.State == STATE_TO_COLD || context.State == STATE_TO_HOT)) {
+		if (Timer::GetElapsed(0, lastTime) >= TIME_BEFORE_SIGNAL && (context.State == STATE_TO_COLD || context.State == STATE_TO_HOT)) {
 
 			context.State = STATE_ALARM;
 			context.LogAlarm();
@@ -33,17 +39,19 @@ uint32_t TurnOnOutput(uint32_t lastTime, uint8_t temp, PIN& alarmPin) {
 			context.State = STATE_TO_HOT;
 			lastTime = Timer::GetTickCount(SYSTICK);
 
-			// alarmPin.Set();	// TODO: Switch to proper pin out
+			heatPin.Set();
 
 		} else if (context.State == STATE_NONE && temp < context.LimitInf) {
 
 			context.State = STATE_TO_COLD;
 			lastTime = Timer::GetTickCount(SYSTICK);
 
-			// alarmPin.Set();	// TODO: Switch to proper pin out
+			coolPin.Set();
 
-		} else if (context.State != STATE_NONE && temp >= context.LimitInf && temp <= context.LimitSup) {
-			context.TurnAlarmOff = true;
+		} else if (temp >= context.LimitInf && temp <= context.LimitSup) {
+			context.TurnAlarmOff = context.State != STATE_NONE;
+			coolPin.Clear();
+			heatPin.Clear();
 		}
 	}
 	return lastTime;
@@ -52,8 +60,9 @@ uint32_t TurnOnOutput(uint32_t lastTime, uint8_t temp, PIN& alarmPin) {
 void TemperatureThread(void * pvParameters) {
 	Thermometer thermo;
 	uint8_t temp;
-	PIN alarmPin(0, 22);
 	alarmPin.Mode(OUTPUT);
+	coolPin.Mode(OUTPUT);
+	heatPin.Mode(OUTPUT);
 	uint32_t lastTime = 0;
 
 	while (1) {
@@ -64,14 +73,13 @@ void TemperatureThread(void * pvParameters) {
 
 		//
 		// Handle request to stop the alarm
-		lastTime = TurnOffAlarm(lastTime, alarmPin);
+		lastTime = TurnOffAlarm(lastTime);
 
 		//
 		// Verifies if the temperature is out of bounds and turns on cooling, heat or alarm
-		lastTime = TurnOnOutput(lastTime, temp, alarmPin);
+		lastTime = TurnOnOutput(lastTime, temp);
 
-		Scheduler::Delay(5000);
-
+		Scheduler::Delay(MONITOR_INTERVAL);
 	}
 }
 

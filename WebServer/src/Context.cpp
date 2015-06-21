@@ -4,11 +4,6 @@ Context::Context() {
 	this->State = STATE_NONE;
 	TurnAlarmOff = false;
 
-	// Flash simulation!
-	this->LimitInf = 10;
-	this->LimitSup = 25;
-	this->RealTimeClock.Config(2015, 6, 14, 18, 58, 0);
-
 	this->EntryIndex = 0;
 	this->AlarmIndex = 0;
 	this->ButtonIndex = 0;
@@ -18,6 +13,18 @@ Context::Context() {
 	for (uint8_t i = 0; i < BT_LEN; ++i) {
 		defaultButtonState.States[BT_LEN] = BT_NONE;
 	}
+
+	// BEGIN: Flash simulation!
+	this->LimitInf = 10;
+	this->LimitSup = 25;
+	this->RealTimeClock.Config(2015, 6, 14, 18, 58, 0);
+
+	for (uint8_t i = 18; i < 24; ++i) {
+		this->CurrentTemperature = i;
+		this->RealTimeClock.Config(2015, 6, 14, i, 15, 0);
+		this->Log();
+	}
+	// END: Flash simulation!
 
 	this->InputEvent.Wait();
 }

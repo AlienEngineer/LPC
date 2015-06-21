@@ -45,7 +45,6 @@ void EvaluateState() {
 						if (Timer::GetElapsed(SYSTICK, time) >= 2000) {
 							menu.MoveTo(MENU_PRESENT);
 							menu.Render();
-							menu.SwitchMenuToSelection(0);
 							return;
 						}
 					}
@@ -55,12 +54,12 @@ void EvaluateState() {
 				// TODO: while here to see if a D+U was pressed again to restart analysis!
 				Scheduler::Delay(4000);
 				YIELDEXEC(lcd.ClearScreen());
+			} else if (currentStates->Ok() && context.State == STATE_ALARM) {
+				context.TurnAlarmOff = true;
 			}
 
 			break;
-		case MENU_PRESENT:
-		case MENU_DEF_TMAX:
-		case MENU_DEF_TMIN:
+		default:
 			if (currentStates->Down() && currentStates->Up()) {
 				break;
 			}

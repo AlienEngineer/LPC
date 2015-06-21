@@ -26,6 +26,8 @@
 #define SHOW_TEMP		4
 #define EXIT			5
 
+#define LOG_VIEW_PAGE_SIZE 10
+
 #define MENU_MIN		0
 #define MENU_MAX		5
 
@@ -48,7 +50,8 @@ private:
 	uint8_t MenuState;
 	uint8_t MenuSelection;
 	uint8_t MenuLastSelection;
-	uint8_t TempValue;
+	int32_t TempValue[3];
+	int32_t TempIndex;
 };
 
 
