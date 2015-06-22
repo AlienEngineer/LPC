@@ -161,11 +161,11 @@ void Menu::HandleTempValueEnter() {
 	switch (MenuSelection) {
 		case DEF_TMAX:
 			TempIndex = 0;
-			context.LimitSup = TempValue[0];
+			context.Config(context.LimitInf, TempValue[0]);
 			break;
 		case DEF_TMIN:
 			TempIndex = 0;
-			context.LimitInf = TempValue[0];
+			context.Config(TempValue[0], context.LimitSup);
 			break;
 		case DEF_CLOCK:
 

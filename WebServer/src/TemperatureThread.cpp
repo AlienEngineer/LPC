@@ -3,8 +3,8 @@
 #include <AppThreads.h>
 #include <LPCTimer.h>
 
-#define TIME_BEFORE_SIGNAL 1000 * 5
-#define MONITOR_INTERVAL 1000 * 5
+#define TIME_BEFORE_SIGNAL 1000 * 60
+#define MONITOR_INTERVAL 1000 * 1
 PIN alarmPin(0, 22);
 PIN coolPin(2, 3);
 PIN heatPin(2, 4);
@@ -49,7 +49,9 @@ uint32_t TurnOnOutput(uint32_t lastTime, uint8_t temp) {
 			coolPin.Set();
 
 		} else if (temp >= context.LimitInf && temp <= context.LimitSup) {
+			lastTime = Timer::GetTickCount(SYSTICK);
 			context.TurnAlarmOff = context.State != STATE_NONE;
+			context.State = STATE_NONE;
 			coolPin.Clear();
 			heatPin.Clear();
 		}

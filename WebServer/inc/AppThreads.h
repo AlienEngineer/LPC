@@ -13,8 +13,7 @@
 #include <Context.h>
 
 #define YIELDEXEC(code) \
-	code; \
-	Scheduler::Yield();
+	code;
 
 extern Context context;
 
